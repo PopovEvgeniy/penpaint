@@ -1,0 +1,243 @@
+object Form1: TForm1
+  Left = 114
+  Height = 443
+  Top = 100
+  Width = 628
+  Caption = 'Form1'
+  ClientHeight = 424
+  ClientWidth = 628
+  Menu = MainMenu1
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnResize = FormResize
+  LCLVersion = '1.0.4.0'
+  object BitBtn1: TBitBtn
+    Left = 9
+    Height = 32
+    Top = 13
+    Width = 32
+    Caption = 'BitBtn1'
+    OnClick = BitBtn1Click
+    TabOrder = 0
+  end
+  object BitBtn2: TBitBtn
+    Left = 48
+    Height = 32
+    Top = 13
+    Width = 32
+    Caption = 'BitBtn1'
+    OnClick = BitBtn2Click
+    TabOrder = 1
+  end
+  object BitBtn3: TBitBtn
+    Left = 88
+    Height = 32
+    Top = 13
+    Width = 32
+    Caption = 'BitBtn1'
+    OnClick = BitBtn3Click
+    TabOrder = 2
+  end
+  object LabeledEdit1: TLabeledEdit
+    Left = 176
+    Height = 21
+    Top = 16
+    Width = 56
+    EditLabel.AnchorSideTop.Control = LabeledEdit1
+    EditLabel.AnchorSideTop.Side = asrCenter
+    EditLabel.AnchorSideRight.Control = LabeledEdit1
+    EditLabel.AnchorSideBottom.Control = LabeledEdit1
+    EditLabel.AnchorSideBottom.Side = asrBottom
+    EditLabel.Left = 144
+    EditLabel.Height = 14
+    EditLabel.Top = 19
+    EditLabel.Width = 29
+    EditLabel.Caption = 'Width'
+    EditLabel.ParentColor = False
+    LabelPosition = lpLeft
+    TabOrder = 3
+    Text = 'LabeledEdit1'
+    OnKeyPress = LabeledEdit1KeyPress
+  end
+  object LabeledEdit2: TLabeledEdit
+    Left = 296
+    Height = 21
+    Top = 16
+    Width = 56
+    EditLabel.AnchorSideTop.Control = LabeledEdit2
+    EditLabel.AnchorSideTop.Side = asrCenter
+    EditLabel.AnchorSideRight.Control = LabeledEdit2
+    EditLabel.AnchorSideBottom.Control = LabeledEdit2
+    EditLabel.AnchorSideBottom.Side = asrBottom
+    EditLabel.Left = 261
+    EditLabel.Height = 14
+    EditLabel.Top = 19
+    EditLabel.Width = 32
+    EditLabel.Caption = 'Height'
+    EditLabel.ParentColor = False
+    LabelPosition = lpLeft
+    TabOrder = 4
+    Text = 'LabeledEdit2'
+    OnKeyPress = LabeledEdit2KeyPress
+  end
+  object BitBtn4: TBitBtn
+    Left = 368
+    Height = 32
+    Top = 13
+    Width = 32
+    Caption = 'BitBtn1'
+    OnClick = BitBtn4Click
+    TabOrder = 5
+  end
+  object LabeledEdit3: TLabeledEdit
+    Left = 448
+    Height = 21
+    Top = 16
+    Width = 56
+    EditLabel.AnchorSideTop.Control = LabeledEdit3
+    EditLabel.AnchorSideTop.Side = asrCenter
+    EditLabel.AnchorSideRight.Control = LabeledEdit3
+    EditLabel.AnchorSideBottom.Control = LabeledEdit3
+    EditLabel.AnchorSideBottom.Side = asrBottom
+    EditLabel.Left = 425
+    EditLabel.Height = 14
+    EditLabel.Top = 19
+    EditLabel.Width = 20
+    EditLabel.Caption = 'Size'
+    EditLabel.ParentColor = False
+    LabelPosition = lpLeft
+    TabOrder = 6
+    Text = 'LabeledEdit3'
+    OnKeyPress = LabeledEdit3KeyPress
+  end
+  object BitBtn5: TBitBtn
+    Left = 520
+    Height = 32
+    Top = 13
+    Width = 32
+    Caption = 'BitBtn1'
+    OnClick = BitBtn5Click
+    TabOrder = 7
+  end
+  object BitBtn6: TBitBtn
+    Left = 560
+    Height = 32
+    Top = 13
+    Width = 32
+    Caption = 'BitBtn1'
+    OnClick = BitBtn6Click
+    TabOrder = 8
+  end
+  object ScrollBox1: TScrollBox
+    Left = 9
+    Height = 448
+    Top = 56
+    Width = 519
+    HorzScrollBar.Page = 499
+    VertScrollBar.Page = 444
+    ClientHeight = 428
+    ClientWidth = 515
+    TabOrder = 9
+    object Image1: TImage
+      Left = 5
+      Height = 436
+      Top = 2
+      Width = 504
+      OnMouseDown = Image1MouseDown
+      OnMouseEnter = Image1MouseEnter
+      OnMouseLeave = Image1MouseLeave
+      OnMouseMove = Image1MouseMove
+      OnResize = Image1Resize
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 20
+    Top = 404
+    Width = 628
+    Panels = <>
+  end
+  object Image2: TImage
+    Left = 536
+    Height = 90
+    Top = 309
+    Width = 90
+  end
+  object ColorDialog1: TColorDialog
+    Color = clBlack
+    CustomColors.Strings = (
+      'ColorA=000000'
+      'ColorB=000080'
+      'ColorC=008000'
+      'ColorD=008080'
+      'ColorE=800000'
+      'ColorF=800080'
+      'ColorG=808000'
+      'ColorH=808080'
+      'ColorI=C0C0C0'
+      'ColorJ=0000FF'
+      'ColorK=00FF00'
+      'ColorL=00FFFF'
+      'ColorM=FF0000'
+      'ColorN=FF00FF'
+      'ColorO=FFFF00'
+      'ColorP=FFFFFF'
+      'ColorQ=C0DCC0'
+      'ColorR=F0CAA6'
+      'ColorS=F0FBFF'
+      'ColorT=A4A0A0'
+    )
+    left = 560
+    top = 56
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    left = 560
+    top = 120
+  end
+  object SavePictureDialog1: TSavePictureDialog
+    OnCanClose = SavePictureDialog1CanClose
+    left = 560
+    top = 184
+  end
+  object MainMenu1: TMainMenu
+    left = 560
+    top = 248
+    object MenuItem1: TMenuItem
+      Caption = 'File'
+      object MenuItem2: TMenuItem
+        Caption = 'New'
+        OnClick = MenuItem2Click
+      end
+      object MenuItem3: TMenuItem
+        Caption = 'Open'
+        OnClick = MenuItem3Click
+      end
+      object MenuItem4: TMenuItem
+        Caption = 'Save'
+        OnClick = MenuItem4Click
+      end
+      object MenuItem5: TMenuItem
+        Caption = 'Save as'
+        OnClick = MenuItem5Click
+      end
+    end
+    object MenuItem6: TMenuItem
+      Caption = 'ClipBoard'
+      object MenuItem7: TMenuItem
+        Caption = 'Copy'
+        OnClick = MenuItem7Click
+      end
+      object MenuItem8: TMenuItem
+        Caption = 'Paste'
+        OnClick = MenuItem8Click
+      end
+    end
+    object MenuItem9: TMenuItem
+      Caption = 'Help'
+      object MenuItem10: TMenuItem
+        Caption = 'About PenPaint'
+        OnClick = MenuItem10Click
+      end
+    end
+  end
+end
