@@ -6,8 +6,8 @@ unit penpaintcode;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Buttons,LCLType,
-  LCLProc,Clipbrd,ExtCtrls,ExtDlgs,Menus,ComCtrls;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Buttons,
+  LCLProc,Clipbrd,ExtCtrls,ExtDlgs,Menus,ComCtrls,LCLIntf;
 
 type
 
@@ -29,6 +29,7 @@ type
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
     MenuItem10: TMenuItem;
+    MenuItem11: TMenuItem;
     MenuItem2: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
@@ -56,10 +57,8 @@ type
     procedure Image1MouseLeave(Sender: TObject);
     procedure Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure Image1Resize(Sender: TObject);
-    procedure LabeledEdit1KeyPress(Sender: TObject; var Key: char);
-    procedure LabeledEdit2KeyPress(Sender: TObject; var Key: char);
-    procedure LabeledEdit3KeyPress(Sender: TObject; var Key: char);
     procedure MenuItem10Click(Sender: TObject);
+    procedure MenuItem11Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
@@ -75,7 +74,6 @@ type
   end; 
 
   procedure window_setup();
-  procedure restrict_input(var key:char);
   procedure interface_setup();
   procedure load_contex_help();
   procedure shortcut_setup();
@@ -94,6 +92,7 @@ type
   procedure load_from_file();
   procedure save_to_file();
   procedure check_command_line();
+  procedure show_help();
   var Form1: TForm1;
   var target:string;
 
@@ -106,28 +105,18 @@ implementation
 procedure window_setup();
 begin
  Application.Title:='PenPaint';
- Form1.Caption:='PenPaint 1.2.3';
+ Form1.Caption:='PenPaint 1.2.6';
  Form1.Font.Name:=Screen.MenuFont.Name;
  Form1.Font.Size:=14;
-end;
-
-procedure restrict_input(var key:char);
-begin
-if (ord(key)<ord('0')) or (ord(key)>ord('9')) then
-begin
-if ord(key)<>VK_BACK then
-begin
-key:=#0;
-end;
-
-end;
-
 end;
 
 procedure interface_setup();
 begin
 Form1.ScrollBox1.AutoScroll:=True;
 Form1.StatusBar1.SimpleText:='';
+Form1.LabeledEdit1.NumbersOnly:=True;
+Form1.LabeledEdit2.NumbersOnly:=True;
+Form1.LabeledEdit3.NumbersOnly:=True;
 Form1.LabeledEdit1.Text:='';
 Form1.LabeledEdit2.Text:=Form1.LabeledEdit1.Text;
 Form1.LabeledEdit3.Text:=Form1.LabeledEdit1.Text;
@@ -175,6 +164,7 @@ Form1.MainMenu1.Items[0].Items[2].ShortCut:=TextToShortCut('Ctrl+S');
 Form1.MainMenu1.Items[0].Items[3].ShortCut:=TextToShortCut('Ctrl+Alt+S');
 Form1.MainMenu1.Items[1].Items[0].ShortCut:=TextToShortCut('Ctrl+C');
 Form1.MainMenu1.Items[1].Items[1].ShortCut:=TextToShortCut('Ctrl+V');
+Form1.MainMenu1.Items[2].Items[1].ShortCut:=TextToShortCut('F1');
 end;
 
 procedure dialog_setup();
@@ -321,6 +311,13 @@ end;
 
 end;
 
+procedure show_help();
+var help:string;
+begin
+help:=ExtractFilePath(Application.ExeName)+'help'+DirectorySeparator+'help.html';
+OpenDocument(help);
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
 setup();
@@ -427,24 +424,14 @@ begin
 get_canvas_size();
 end;
 
-procedure TForm1.LabeledEdit1KeyPress(Sender: TObject; var Key: char);
-begin
-restrict_input(Key);
-end;
-
-procedure TForm1.LabeledEdit2KeyPress(Sender: TObject; var Key: char);
-begin
-restrict_input(Key);
-end;
-
-procedure TForm1.LabeledEdit3KeyPress(Sender: TObject; var Key: char);
-begin
-restrict_input(Key);
-end;
-
 procedure TForm1.MenuItem10Click(Sender: TObject);
 begin
-ShowMessage('PenPaint. Version 1.2.3. Simply drawing program by Popov Evgeniy Alekseyevich. This program distributed under GNU GENERAL PUBLIC LICENSE');
+ShowMessage('PenPaint. Simply drawing program by Popov Evgeniy Alekseyevich. This program distributed under GNU GENERAL PUBLIC LICENSE');
+end;
+
+procedure TForm1.MenuItem11Click(Sender: TObject);
+begin
+show_help();
 end;
 
 procedure TForm1.MenuItem2Click(Sender: TObject);

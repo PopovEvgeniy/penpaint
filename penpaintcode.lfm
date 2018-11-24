@@ -10,7 +10,7 @@ object Form1: TForm1
   OnClose = FormClose
   OnCreate = FormCreate
   OnResize = FormResize
-  LCLVersion = '1.0.4.0'
+  LCLVersion = '1.8.4.0'
   object BitBtn1: TBitBtn
     Left = 9
     Height = 32
@@ -48,16 +48,15 @@ object Form1: TForm1
     EditLabel.AnchorSideRight.Control = LabeledEdit1
     EditLabel.AnchorSideBottom.Control = LabeledEdit1
     EditLabel.AnchorSideBottom.Side = asrBottom
-    EditLabel.Left = 144
-    EditLabel.Height = 14
-    EditLabel.Top = 19
-    EditLabel.Width = 29
+    EditLabel.Left = 145
+    EditLabel.Height = 13
+    EditLabel.Top = 20
+    EditLabel.Width = 28
     EditLabel.Caption = 'Width'
     EditLabel.ParentColor = False
     LabelPosition = lpLeft
     TabOrder = 3
     Text = 'LabeledEdit1'
-    OnKeyPress = LabeledEdit1KeyPress
   end
   object LabeledEdit2: TLabeledEdit
     Left = 296
@@ -69,16 +68,15 @@ object Form1: TForm1
     EditLabel.AnchorSideRight.Control = LabeledEdit2
     EditLabel.AnchorSideBottom.Control = LabeledEdit2
     EditLabel.AnchorSideBottom.Side = asrBottom
-    EditLabel.Left = 261
-    EditLabel.Height = 14
-    EditLabel.Top = 19
-    EditLabel.Width = 32
+    EditLabel.Left = 262
+    EditLabel.Height = 13
+    EditLabel.Top = 20
+    EditLabel.Width = 31
     EditLabel.Caption = 'Height'
     EditLabel.ParentColor = False
     LabelPosition = lpLeft
     TabOrder = 4
     Text = 'LabeledEdit2'
-    OnKeyPress = LabeledEdit2KeyPress
   end
   object BitBtn4: TBitBtn
     Left = 368
@@ -99,16 +97,15 @@ object Form1: TForm1
     EditLabel.AnchorSideRight.Control = LabeledEdit3
     EditLabel.AnchorSideBottom.Control = LabeledEdit3
     EditLabel.AnchorSideBottom.Side = asrBottom
-    EditLabel.Left = 425
-    EditLabel.Height = 14
-    EditLabel.Top = 19
-    EditLabel.Width = 20
+    EditLabel.Left = 426
+    EditLabel.Height = 13
+    EditLabel.Top = 20
+    EditLabel.Width = 19
     EditLabel.Caption = 'Size'
     EditLabel.ParentColor = False
     LabelPosition = lpLeft
     TabOrder = 6
     Text = 'LabeledEdit3'
-    OnKeyPress = LabeledEdit3KeyPress
   end
   object BitBtn5: TBitBtn
     Left = 520
@@ -133,9 +130,9 @@ object Form1: TForm1
     Height = 448
     Top = 56
     Width = 519
-    HorzScrollBar.Page = 499
-    VertScrollBar.Page = 444
-    ClientHeight = 428
+    HorzScrollBar.Page = 509
+    VertScrollBar.Page = 438
+    ClientHeight = 444
     ClientWidth = 515
     TabOrder = 9
     object Image1: TImage
@@ -237,6 +234,10 @@ object Form1: TForm1
       object MenuItem10: TMenuItem
         Caption = 'About PenPaint'
         OnClick = MenuItem10Click
+      end
+      object MenuItem11: TMenuItem
+        Caption = 'Show help'
+        OnClick = MenuItem11Click
       end
     end
   end
