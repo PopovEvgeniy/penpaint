@@ -7,7 +7,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Buttons,
-  LCLProc,Clipbrd,ExtCtrls,ExtDlgs,Menus,ComCtrls,LCLIntf;
+  LCLProc,Clipbrd,ExtCtrls,ExtDlgs,Menus,ComCtrls,LCLIntf, LazFileUtils;
 
 type
 
@@ -105,7 +105,7 @@ implementation
 procedure window_setup();
 begin
  Application.Title:='PenPaint';
- Form1.Caption:='PenPaint 1.2.6';
+ Form1.Caption:='PenPaint 1.2.7';
  Form1.Font.Name:=Screen.MenuFont.Name;
  Form1.Font.Size:=14;
 end;
