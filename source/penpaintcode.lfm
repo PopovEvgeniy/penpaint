@@ -4,13 +4,13 @@ object Form1: TForm1
   Top = 100
   Width = 628
   Caption = 'Form1'
-  ClientHeight = 424
+  ClientHeight = 423
   ClientWidth = 628
   Menu = MainMenu1
   OnClose = FormClose
   OnCreate = FormCreate
   OnResize = FormResize
-  LCLVersion = '2.0.0.4'
+  LCLVersion = '2.0.10.0'
   object BitBtn1: TBitBtn
     Left = 9
     Height = 32
@@ -40,11 +40,11 @@ object Form1: TForm1
   end
   object LabeledEdit1: TLabeledEdit
     Left = 176
-    Height = 21
+    Height = 23
     Top = 16
     Width = 56
-    EditLabel.Height = 13
-    EditLabel.Width = 28
+    EditLabel.Height = 15
+    EditLabel.Width = 32
     EditLabel.Caption = 'Width'
     EditLabel.ParentColor = False
     LabelPosition = lpLeft
@@ -53,11 +53,11 @@ object Form1: TForm1
   end
   object LabeledEdit2: TLabeledEdit
     Left = 296
-    Height = 21
+    Height = 23
     Top = 16
     Width = 56
-    EditLabel.Height = 13
-    EditLabel.Width = 31
+    EditLabel.Height = 15
+    EditLabel.Width = 36
     EditLabel.Caption = 'Height'
     EditLabel.ParentColor = False
     LabelPosition = lpLeft
@@ -75,11 +75,11 @@ object Form1: TForm1
   end
   object LabeledEdit3: TLabeledEdit
     Left = 448
-    Height = 21
+    Height = 23
     Top = 16
     Width = 56
-    EditLabel.Height = 13
-    EditLabel.Width = 19
+    EditLabel.Height = 15
+    EditLabel.Width = 20
     EditLabel.Caption = 'Size'
     EditLabel.ParentColor = False
     LabelPosition = lpLeft
@@ -126,19 +126,6 @@ object Form1: TForm1
       OnResize = Image1Resize
     end
   end
-  object StatusBar1: TStatusBar
-    Left = 0
-    Height = 20
-    Top = 404
-    Width = 628
-    Panels = <>
-  end
-  object Image2: TImage
-    Left = 536
-    Height = 90
-    Top = 309
-    Width = 90
-  end
   object ColorDialog1: TColorDialog
     Color = clBlack
     CustomColors.Strings = (
@@ -163,21 +150,22 @@ object Form1: TForm1
       'ColorS=F0FBFF'
       'ColorT=A4A0A0'
     )
-    left = 560
-    top = 56
+    Left = 560
+    Top = 56
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    left = 560
-    top = 120
+    OnCanClose = OpenPictureDialog1CanClose
+    Left = 560
+    Top = 120
   end
   object SavePictureDialog1: TSavePictureDialog
     OnCanClose = SavePictureDialog1CanClose
-    left = 560
-    top = 184
+    Left = 560
+    Top = 184
   end
   object MainMenu1: TMainMenu
-    left = 560
-    top = 248
+    Left = 560
+    Top = 248
     object MenuItem1: TMenuItem
       Caption = 'File'
       object MenuItem2: TMenuItem
@@ -217,6 +205,10 @@ object Form1: TForm1
       object MenuItem11: TMenuItem
         Caption = 'Show help'
         OnClick = MenuItem11Click
+      end
+      object MenuItem12: TMenuItem
+        Caption = 'Visit homepage'
+        OnClick = MenuItem12Click
       end
     end
   end
