@@ -41,6 +41,7 @@ type
     OpenPictureDialog1: TOpenPictureDialog;
     SavePictureDialog1: TSavePictureDialog;
     ScrollBox1: TScrollBox;
+    StatusBar1: TStatusBar;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
@@ -81,14 +82,13 @@ type
   procedure shortcut_setup();
   procedure dialog_setup();
   procedure canvas_setup();
+  procedure resize_workspace();
   procedure setup();
   procedure create_image();
   procedure set_canvas_size(var target:TImage;width:LongWord;height:LongWord);
-  procedure set_pen_color(var colordialog:TColorDialog;var target:TImage);
-  procedure set_background_color(var colordialog:TColorDialog;var target:TImage);
-  procedure save_to_clipboard(var target:TImage);
-  procedure load_from_clipboard(var target:TImage);
-  procedure save_to_file(var savedialog:TSavePictureDialog;var target:TImage);
+  procedure save_to_clipboard();
+  procedure load_from_clipboard();
+  procedure save_to_file();
   procedure show_help();
   var Form1: TForm1;
 
@@ -101,7 +101,7 @@ implementation
 procedure window_setup();
 begin
  Application.Title:='PenPaint';
- Form1.Caption:='PenPaint 1.4.1';
+ Form1.Caption:='PenPaint 1.4.7';
  Form1.Font.Name:=Screen.MenuFont.Name;
  Form1.Font.Size:=14;
 end;
@@ -174,8 +174,6 @@ end;
 
 procedure canvas_setup();
 begin
- Form1.Image1.Width:=Form1.ScrollBox1.ClientWidth-10;
- Form1.Image1.Height:=Form1.ScrollBox1.ClientHeight-25;
  Form1.Image1.Parent.DoubleBuffered:=True;
  Form1.Image1.AutoSize:=False;
  Form1.Image1.Proportional:=False;
@@ -186,6 +184,12 @@ begin
  Form1.Image1.Canvas.Pen.Color:=clBlack;
 end;
 
+procedure resize_workspace();
+begin
+Form1.ScrollBox1.Width:=Form1.ClientWidth-10;
+Form1.ScrollBox1.Height:=Form1.ClientHeight-Form1.BitBtn2.Top-80;
+end;
+
 procedure setup();
 begin
  window_setup();
@@ -194,6 +198,7 @@ begin
  shortcut_setup();
  dialog_setup();
  canvas_setup();
+ resize_workspace();
 end;
 
 procedure create_image();
@@ -201,6 +206,7 @@ begin
  Form1.LabeledEdit3.Text:='5';
  Form1.Image1.Canvas.FillRect(Form1.Image1.Canvas.ClipRect);
  Form1.SavePictureDialog1.FileName:='';
+ Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
 end;
 
 procedure set_canvas_size(var target:TImage;width:LongWord;height:LongWord);
@@ -216,46 +222,27 @@ begin
  original.Destroy();
 end;
 
-procedure set_pen_color(var colordialog:TColorDialog;var target:TImage);
+procedure save_to_clipboard();
 begin
-if colordialog.Execute()=True then
+ Form1.Image1.Picture.SaveToClipboardFormat(CF_BITMAP);
+end;
+
+procedure load_from_clipboard();
+begin
+ Form1.Image1.AutoSize:=True;
+ Form1.Image1.Picture.LoadFromClipboardFormat(CF_BITMAP);
+ Form1.Image1.AutoSize:=False;
+end;
+
+procedure save_to_file();
+begin
+if Form1.SavePictureDialog1.FileName<>'' then
  begin
- target.Canvas.Pen.Color:=colordialog.Color;
- end;
-
-end;
-
-procedure set_background_color(var colordialog:TColorDialog;var target:TImage);
-begin
-if colordialog.Execute()=True then
- begin
- target.Canvas.Brush.Color:=colordialog.Color;
- target.Canvas.FillRect(target.Canvas.ClipRect);
- end;
-
-end;
-
-procedure save_to_clipboard(var target:TImage);
-begin
- target.Picture.SaveToClipboardFormat(CF_BITMAP);
-end;
-
-procedure load_from_clipboard(var target:TImage);
-begin
- target.AutoSize:=True;
- target.Picture.LoadFromClipboardFormat(CF_BITMAP);
- target.AutoSize:=False;
-end;
-
-procedure save_to_file(var savedialog:TSavePictureDialog;var target:TImage);
-begin
-if savedialog.FileName<>'' then
- begin
- target.Picture.SaveToFile(savedialog.FileName);
+ Form1.Image1.Picture.SaveToFile(Form1.SavePictureDialog1.FileName);
  end
  else
  begin
- savedialog.Execute();
+ Form1.SavePictureDialog1.Execute();
  end;
 
 end;
@@ -285,22 +272,32 @@ end;
 
 procedure TForm1.BitBtn3Click(Sender: TObject);
 begin
- save_to_file(Form1.SavePictureDialog1,Form1.Image1);
+ save_to_file();
 end;
 
 procedure TForm1.BitBtn4Click(Sender: TObject);
 begin
  set_canvas_size(Form1.Image1,StrToInt(Form1.LabeledEdit1.Text),StrToInt(Form1.LabeledEdit2.Text));
+ resize_workspace();
 end;
 
 procedure TForm1.BitBtn5Click(Sender: TObject);
 begin
- set_pen_color(Form1.ColorDialog1,Form1.Image1);
+if Form1.ColorDialog1.Execute()=True then
+ begin
+ Form1.Image1.Canvas.Pen.Color:=Form1.ColorDialog1.Color;
+ end;
+
 end;
 
 procedure TForm1.BitBtn6Click(Sender: TObject);
 begin
- set_background_color(Form1.ColorDialog1,Form1.Image1);
+if Form1.ColorDialog1.Execute()=True then
+ begin
+ Form1.Image1.Canvas.Brush.Color:=Form1.ColorDialog1.Color;
+ Form1.Image1.Canvas.FillRect(Form1.Image1.Canvas.ClipRect);
+ end;
+
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -322,8 +319,7 @@ end;
 
 procedure TForm1.FormResize(Sender: TObject);
 begin
- Form1.ScrollBox1.Width:=Form1.ClientWidth-10;
- Form1.ScrollBox1.Height:=Form1.ClientHeight-Form1.BitBtn2.Top-80;
+ resize_workspace();
 end;
 
 procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
@@ -400,7 +396,7 @@ end;
 
 procedure TForm1.MenuItem4Click(Sender: TObject);
 begin
- save_to_file(Form1.SavePictureDialog1,Form1.Image1);
+ save_to_file();
 end;
 
 procedure TForm1.MenuItem5Click(Sender: TObject);
@@ -410,12 +406,12 @@ end;
 
 procedure TForm1.MenuItem7Click(Sender: TObject);
 begin
- save_to_clipboard(Form1.Image1);
+ save_to_clipboard();
 end;
 
 procedure TForm1.MenuItem8Click(Sender: TObject);
 begin
- load_from_clipboard(Form1.Image1);
+ load_from_clipboard();
 end;
 
 procedure TForm1.OpenPictureDialog1CanClose(Sender: TObject;
@@ -424,6 +420,7 @@ begin
  Form1.SavePictureDialog1.FileName:=Form1.OpenPictureDialog1.FileName;
  Form1.Image1.AutoSize:=True;
  Form1.Image1.Picture.LoadFromFile(Form1.SavePictureDialog1.FileName);
+ Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
  Form1.Image1.AutoSize:=False;
 end;
 
@@ -434,6 +431,7 @@ if SavePictureDialog1.FileName<>'' then
  begin
  Form1.SavePictureDialog1.FileName:=ExtractFileNameWithoutExt(Form1.SavePictureDialog1.FileName)+'.'+Form1.SavePictureDialog1.GetFilterExt();
  Form1.Image1.Picture.SaveToFile(Form1.SavePictureDialog1.FileName);
+ Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
  end;
 
 end;
