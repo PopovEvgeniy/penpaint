@@ -85,7 +85,7 @@ type
   procedure resize_workspace();
   procedure setup();
   procedure create_image();
-  procedure set_canvas_size(var target:TImage;width:LongWord;height:LongWord);
+  procedure set_canvas_size();
   procedure save_to_clipboard();
   procedure load_from_clipboard();
   procedure save_to_file();
@@ -101,7 +101,7 @@ implementation
 procedure window_setup();
 begin
  Application.Title:='PenPaint';
- Form1.Caption:='PenPaint 1.4.7';
+ Form1.Caption:='PenPaint 1.4.9';
  Form1.Font.Name:=Screen.MenuFont.Name;
  Form1.Font.Size:=14;
 end;
@@ -146,7 +146,7 @@ begin
  Form1.BitBtn1.Hint:='Create new image';
  Form1.BitBtn2.Hint:='Load image from file';
  Form1.BitBtn3.Hint:='Save image to file';
- Form1.BitBtn4.Hint:='Set canvas size';
+ Form1.BitBtn4.Hint:='Clear current image and resize canvas';
  Form1.BitBtn5.Hint:='Set pen color';
  Form1.BitBtn6.Hint:='Set background color';
 end;
@@ -160,6 +160,7 @@ begin
  Form1.MainMenu1.Items[1].Items[0].ShortCut:=TextToShortCut('Ctrl+C');
  Form1.MainMenu1.Items[1].Items[1].ShortCut:=TextToShortCut('Ctrl+V');
  Form1.MainMenu1.Items[2].Items[1].ShortCut:=TextToShortCut('F1');
+ Form1.MainMenu1.Items[2].Items[2].ShortCut:=TextToShortCut('Ctrl+H');
 end;
 
 procedure dialog_setup();
@@ -209,17 +210,12 @@ begin
  Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
 end;
 
-procedure set_canvas_size(var target:TImage;width:LongWord;height:LongWord);
-var original:TPicture;
+procedure set_canvas_size();
 begin
- original:=TPicture.Create();
- target.Width:=width;
- target.Height:=height;
- original.Assign(target.Picture);
- target.Picture.Bitmap.SetSize(width,height);
- target.Canvas.FillRect(target.Canvas.ClipRect);
- target.Canvas.StretchDraw(target.Canvas.ClipRect,original.Graphic);
- original.Destroy();
+ Form1.Image1.Width:=StrToInt(Form1.LabeledEdit1.Text);
+ Form1.Image1.Height:=StrToInt(Form1.LabeledEdit2.Text);
+ Form1.Image1.Picture.Bitmap.SetSize(Form1.Image1.Width,Form1.Image1.Height);
+ Form1.Image1.Canvas.FillRect(Form1.Image1.ClientRect);
 end;
 
 procedure save_to_clipboard();
@@ -236,13 +232,13 @@ end;
 
 procedure save_to_file();
 begin
-if Form1.SavePictureDialog1.FileName<>'' then
+ if Form1.SavePictureDialog1.FileName<>'' then
  begin
- Form1.Image1.Picture.SaveToFile(Form1.SavePictureDialog1.FileName);
+  Form1.Image1.Picture.SaveToFile(Form1.SavePictureDialog1.FileName);
  end
  else
  begin
- Form1.SavePictureDialog1.Execute();
+  Form1.SavePictureDialog1.Execute();
  end;
 
 end;
@@ -277,41 +273,41 @@ end;
 
 procedure TForm1.BitBtn4Click(Sender: TObject);
 begin
- set_canvas_size(Form1.Image1,StrToInt(Form1.LabeledEdit1.Text),StrToInt(Form1.LabeledEdit2.Text));
+ set_canvas_size();
  resize_workspace();
 end;
 
 procedure TForm1.BitBtn5Click(Sender: TObject);
 begin
-if Form1.ColorDialog1.Execute()=True then
+ if Form1.ColorDialog1.Execute()=True then
  begin
- Form1.Image1.Canvas.Pen.Color:=Form1.ColorDialog1.Color;
+  Form1.Image1.Canvas.Pen.Color:=Form1.ColorDialog1.Color;
  end;
 
 end;
 
 procedure TForm1.BitBtn6Click(Sender: TObject);
 begin
-if Form1.ColorDialog1.Execute()=True then
+ if Form1.ColorDialog1.Execute()=True then
  begin
- Form1.Image1.Canvas.Brush.Color:=Form1.ColorDialog1.Color;
- Form1.Image1.Canvas.FillRect(Form1.Image1.Canvas.ClipRect);
+  Form1.Image1.Canvas.Brush.Color:=Form1.ColorDialog1.Color;
+  Form1.Image1.Canvas.FillRect(Form1.Image1.Canvas.ClipRect);
  end;
 
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-if Form1.SavePictureDialog1.FileName<>'' then
+ if Form1.SavePictureDialog1.FileName<>'' then
  begin
- Form1.Image1.Picture.SaveToFile(Form1.SavePictureDialog1.FileName);
+  Form1.Image1.Picture.SaveToFile(Form1.SavePictureDialog1.FileName);
  end
  else
  begin
- if MessageDlg(Application.Title,'Image not saved. Do you want save it now?',mtCustom,mbYesNo,0)=mrYes then
- begin
- Form1.SavePictureDialog1.Execute();
- end;
+  if MessageDlg(Application.Title,'Image not saved. Do you want save it now?',mtCustom,mbYesNo,0)=mrYes then
+  begin
+   Form1.SavePictureDialog1.Execute();
+  end;
 
 end;
 
@@ -325,17 +321,17 @@ end;
 procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-if Button=mbRight then
+ if Button=mbRight then
  begin
- if ssShift in Shift then
- begin
- Form1.Image1.Canvas.Pen.Color:=Form1.Image1.Canvas.Pixels[X,Y];
- end
- else
- begin
- Form1.Image1.Canvas.Brush.Color:=Form1.Image1.Canvas.Pen.Color;
- Form1.Image1.Canvas.FloodFill(X,Y,Form1.Image1.Canvas.Pixels[X,Y],fsSurface);
- end;
+  if ssShift in Shift then
+  begin
+   Form1.Image1.Canvas.Pen.Color:=Form1.Image1.Canvas.Pixels[X,Y];
+  end
+  else
+  begin
+   Form1.Image1.Canvas.Brush.Color:=Form1.Image1.Canvas.Pen.Color;
+   Form1.Image1.Canvas.FloodFill(X,Y,Form1.Image1.Canvas.Pixels[X,Y],fsSurface);
+  end;
 
  end;
 
@@ -355,10 +351,10 @@ end;
 procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
 begin
-if ssLeft in Shift then
+ if ssLeft in Shift then
  begin
- Form1.Image1.Canvas.MoveTo(X,Y);
- Form1.Image1.Canvas.LineTo(X,Y);
+  Form1.Image1.Canvas.MoveTo(X,Y);
+  Form1.Image1.Canvas.LineTo(X,Y);
  end;
 
 end;
@@ -427,11 +423,11 @@ end;
 procedure TForm1.SavePictureDialog1CanClose(Sender: TObject;
   var CanClose: boolean);
 begin
-if SavePictureDialog1.FileName<>'' then
+ if SavePictureDialog1.FileName<>'' then
  begin
- Form1.SavePictureDialog1.FileName:=ExtractFileNameWithoutExt(Form1.SavePictureDialog1.FileName)+'.'+Form1.SavePictureDialog1.GetFilterExt();
- Form1.Image1.Picture.SaveToFile(Form1.SavePictureDialog1.FileName);
- Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
+  Form1.SavePictureDialog1.FileName:=ExtractFileNameWithoutExt(Form1.SavePictureDialog1.FileName)+'.'+Form1.SavePictureDialog1.GetFilterExt();
+  Form1.Image1.Picture.SaveToFile(Form1.SavePictureDialog1.FileName);
+  Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
  end;
 
 end;
