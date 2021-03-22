@@ -84,6 +84,7 @@ type
   procedure canvas_setup();
   procedure resize_workspace();
   procedure setup();
+  procedure check_command_line();
   procedure create_image();
   procedure set_canvas_size();
   procedure save_to_clipboard();
@@ -101,7 +102,7 @@ implementation
 procedure window_setup();
 begin
  Application.Title:='PenPaint';
- Form1.Caption:='PenPaint 1.4.9';
+ Form1.Caption:='PenPaint 1.5.1';
  Form1.Font.Name:=Screen.MenuFont.Name;
  Form1.Font.Size:=14;
 end;
@@ -176,7 +177,7 @@ end;
 procedure canvas_setup();
 begin
  Form1.Image1.Parent.DoubleBuffered:=True;
- Form1.Image1.AutoSize:=False;
+ Form1.Image1.AutoSize:=True;
  Form1.Image1.Proportional:=False;
  Form1.Image1.Stretch:=False;
  Form1.Image1.Canvas.Brush.Style:=bsSolid;
@@ -202,6 +203,17 @@ begin
  resize_workspace();
 end;
 
+procedure check_command_line();
+begin
+ if ParamCount()>0 then
+ begin
+  Form1.SavePictureDialog1.FileName:=ParamStr(1);
+  Form1.Image1.Picture.LoadFromFile(Form1.SavePictureDialog1.FileName);
+  Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
+ end;
+
+end;
+
 procedure create_image();
 begin
  Form1.LabeledEdit3.Text:='5';
@@ -225,9 +237,7 @@ end;
 
 procedure load_from_clipboard();
 begin
- Form1.Image1.AutoSize:=True;
  Form1.Image1.Picture.LoadFromClipboardFormat(CF_BITMAP);
- Form1.Image1.AutoSize:=False;
 end;
 
 procedure save_to_file();
@@ -254,6 +264,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
  setup();
  create_image();
+ check_command_line();
 end;
 
 procedure TForm1.BitBtn1Click(Sender: TObject);
@@ -414,10 +425,8 @@ procedure TForm1.OpenPictureDialog1CanClose(Sender: TObject;
   var CanClose: boolean);
 begin
  Form1.SavePictureDialog1.FileName:=Form1.OpenPictureDialog1.FileName;
- Form1.Image1.AutoSize:=True;
  Form1.Image1.Picture.LoadFromFile(Form1.SavePictureDialog1.FileName);
  Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
- Form1.Image1.AutoSize:=False;
 end;
 
 procedure TForm1.SavePictureDialog1CanClose(Sender: TObject;
