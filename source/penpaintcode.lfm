@@ -10,7 +10,7 @@ object Form1: TForm1
   OnClose = FormClose
   OnCreate = FormCreate
   OnResize = FormResize
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '2.2.2.0'
   object BitBtn1: TBitBtn
     Left = 9
     Height = 32
@@ -212,10 +212,6 @@ object Form1: TForm1
       object MenuItem11: TMenuItem
         Caption = 'Show help'
         OnClick = MenuItem11Click
-      end
-      object MenuItem12: TMenuItem
-        Caption = 'Visit homepage'
-        OnClick = MenuItem12Click
       end
     end
   end

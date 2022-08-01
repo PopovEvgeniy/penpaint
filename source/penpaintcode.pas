@@ -29,7 +29,6 @@ type
     MenuItem1: TMenuItem;
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
-    MenuItem12: TMenuItem;
     MenuItem2: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
@@ -59,7 +58,6 @@ type
     procedure Image1Resize(Sender: TObject);
     procedure MenuItem10Click(Sender: TObject);
     procedure MenuItem11Click(Sender: TObject);
-    procedure MenuItem12Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
@@ -76,22 +74,7 @@ type
     { public declarations }
   end; 
 
-  procedure window_setup();
-  procedure interface_setup();
-  procedure load_contex_help();
-  procedure shortcut_setup();
-  procedure dialog_setup();
-  procedure canvas_setup();
-  procedure resize_workspace();
-  procedure setup();
-  procedure check_command_line();
-  procedure create_image();
-  procedure set_canvas_size();
-  procedure save_to_clipboard();
-  procedure load_from_clipboard();
-  procedure save_to_file();
-  procedure show_help();
-  var Form1: TForm1;
+var Form1: TForm1;
 
 implementation
 
@@ -102,7 +85,7 @@ implementation
 procedure window_setup();
 begin
  Application.Title:='PenPaint';
- Form1.Caption:='PenPaint 1.5.1';
+ Form1.Caption:='PenPaint 1.5.2';
  Form1.Font.Name:=Screen.MenuFont.Name;
  Form1.Font.Size:=14;
 end;
@@ -161,7 +144,6 @@ begin
  Form1.MainMenu1.Items[1].Items[0].ShortCut:=TextToShortCut('Ctrl+C');
  Form1.MainMenu1.Items[1].Items[1].ShortCut:=TextToShortCut('Ctrl+V');
  Form1.MainMenu1.Items[2].Items[1].ShortCut:=TextToShortCut('F1');
- Form1.MainMenu1.Items[2].Items[2].ShortCut:=TextToShortCut('Ctrl+H');
 end;
 
 procedure dialog_setup();
@@ -378,17 +360,12 @@ end;
 
 procedure TForm1.MenuItem10Click(Sender: TObject);
 begin
- ShowMessage('PenPaint. Simply drawing program by Popov Evgeniy Alekseyevich. This program distributed under GNU GENERAL PUBLIC LICENSE');
+ ShowMessage('PenPaint is simply drawing program by Popov Evgeniy Alekseyevich');
 end;
 
 procedure TForm1.MenuItem11Click(Sender: TObject);
 begin
  show_help();
-end;
-
-procedure TForm1.MenuItem12Click(Sender: TObject);
-begin
- OpenDocument('https://github.com/PopovEvgeniy/penpaint');
 end;
 
 procedure TForm1.MenuItem2Click(Sender: TObject);
