@@ -85,7 +85,7 @@ implementation
 procedure window_setup();
 begin
  Application.Title:='PenPaint';
- Form1.Caption:='PenPaint 1.5.2';
+ Form1.Caption:='PenPaint 1.5.3';
  Form1.Font.Name:=Screen.MenuFont.Name;
  Form1.Font.Size:=14;
 end;
@@ -127,12 +127,12 @@ end;
 
 procedure load_contex_help();
 begin
- Form1.BitBtn1.Hint:='Create new image';
- Form1.BitBtn2.Hint:='Load image from file';
- Form1.BitBtn3.Hint:='Save image to file';
- Form1.BitBtn4.Hint:='Clear current image and resize canvas';
- Form1.BitBtn5.Hint:='Set pen color';
- Form1.BitBtn6.Hint:='Set background color';
+ Form1.BitBtn1.Hint:='Create a new image';
+ Form1.BitBtn2.Hint:='Load an image from the file';
+ Form1.BitBtn3.Hint:='Save an image to the file';
+ Form1.BitBtn4.Hint:='Clear the current image and resize the canvas';
+ Form1.BitBtn5.Hint:='Set the pen color';
+ Form1.BitBtn6.Hint:='Set the background color';
 end;
 
 procedure shortcut_setup();
@@ -150,7 +150,7 @@ procedure dialog_setup();
 begin
  Form1.OpenPictureDialog1.InitialDir:='';
  Form1.SavePictureDialog1.InitialDir:=Form1.OpenPictureDialog1.InitialDir;
- Form1.OpenPictureDialog1.Filter:='All supported format|*.bmp;*.jpg;*.png;*.xpm';
+ Form1.OpenPictureDialog1.Filter:='All supported formats|*.bmp;*.jpg;*.png;*.xpm';
  Form1.OpenPictureDialog1.FileName:='*.bmp;*.jpg;*.png;*.xpm';
  Form1.SavePictureDialog1.Filter:='Bitmaps|*.bmp|Pixmap|*.xpm|Portable Network Graphic|*.png|Joint Picture Expert Group|*.jpg';
  Form1.SavePictureDialog1.FilterIndex:=1;
@@ -297,7 +297,7 @@ begin
  end
  else
  begin
-  if MessageDlg(Application.Title,'Image not saved. Do you want save it now?',mtCustom,mbYesNo,0)=mrYes then
+  if MessageDlg(Application.Title,'An image is not saved. Do you want to save it now?',mtCustom,mbYesNo,0)=mrYes then
   begin
    Form1.SavePictureDialog1.Execute();
   end;
@@ -360,7 +360,7 @@ end;
 
 procedure TForm1.MenuItem10Click(Sender: TObject);
 begin
- ShowMessage('PenPaint is simply drawing program by Popov Evgeniy Alekseyevich');
+ ShowMessage('PenPaint is a simple drawing program by Popov Evgeniy Alekseyevich');
 end;
 
 procedure TForm1.MenuItem11Click(Sender: TObject);

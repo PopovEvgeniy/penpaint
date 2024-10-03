@@ -82,8 +82,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="355"/>
-        <CursorPos X="81" Y="363"/>
+        <TopLine Value="203"/>
+        <CursorPos X="6" Y="208"/>
         <UsageCount Value="26"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -92,123 +92,123 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="319" Column="6" TopLine="311"/>
+        <Caret Line="457" Column="37" TopLine="426"/>
       </Position1>
       <Position2>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="457" Column="37" TopLine="426"/>
+        <Caret Line="451" Column="34" TopLine="204"/>
       </Position2>
       <Position3>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="451" Column="34" TopLine="204"/>
+        <Caret Line="458" Column="34" TopLine="442"/>
       </Position3>
       <Position4>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="458" Column="34" TopLine="442"/>
+        <Caret Line="98" Column="21" TopLine="79"/>
       </Position4>
       <Position5>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="98" Column="21" TopLine="79"/>
+        <Caret Line="109" Column="32" TopLine="84"/>
       </Position5>
       <Position6>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="109" Column="32" TopLine="84"/>
+        <Caret Line="108" Column="32" TopLine="92"/>
       </Position6>
       <Position7>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="108" Column="32" TopLine="92"/>
+        <Caret Line="95" Column="80" TopLine="35"/>
       </Position7>
       <Position8>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="95" Column="80" TopLine="35"/>
+        <Caret Line="115" Column="36" TopLine="108"/>
       </Position8>
       <Position9>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="115" Column="36" TopLine="108"/>
+        <Caret Line="234" Column="58" TopLine="227"/>
       </Position9>
       <Position10>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="234" Column="58" TopLine="227"/>
+        <Caret Line="245" Column="61" TopLine="238"/>
       </Position10>
       <Position11>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="245" Column="61" TopLine="238"/>
+        <Caret Line="88" Column="72" TopLine="64"/>
       </Position11>
       <Position12>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="88" Column="72" TopLine="64"/>
+        <Caret Line="228" Column="44" TopLine="219"/>
       </Position12>
       <Position13>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="228" Column="44" TopLine="219"/>
+        <Caret Line="227" Column="44" TopLine="218"/>
       </Position13>
       <Position14>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="227" Column="44" TopLine="218"/>
+        <Caret Line="90" Column="50" TopLine="70"/>
       </Position14>
       <Position15>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="90" Column="50" TopLine="70"/>
+        <Caret Line="86" Column="80" TopLine="71"/>
       </Position15>
       <Position16>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="86" Column="80" TopLine="71"/>
+        <Caret Line="89" Column="41" TopLine="71"/>
       </Position16>
       <Position17>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="89" Column="41" TopLine="71"/>
+        <Caret Line="264" Column="35" TopLine="245"/>
       </Position17>
       <Position18>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="264" Column="35" TopLine="245"/>
+        <Caret Line="91" Column="77" TopLine="79"/>
       </Position18>
       <Position19>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="91" Column="77" TopLine="79"/>
+        <Caret Line="318" Column="54" TopLine="304"/>
       </Position19>
       <Position20>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="318" Column="54" TopLine="304"/>
+        <Caret Line="87" Column="35" TopLine="31"/>
       </Position20>
       <Position21>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="87" Column="35" TopLine="31"/>
+        <Caret Line="302" Column="2" TopLine="288"/>
       </Position21>
       <Position22>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="302" Column="2" TopLine="288"/>
+        <Caret Line="419" Column="37" TopLine="405"/>
       </Position22>
       <Position23>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="419" Column="37" TopLine="405"/>
+        <Caret Line="217"/>
       </Position23>
       <Position24>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="217"/>
+        <Caret Line="312" Column="86" TopLine="289"/>
       </Position24>
       <Position25>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="312" Column="86" TopLine="289"/>
+        <Caret Line="426" Column="2" TopLine="397"/>
       </Position25>
       <Position26>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="426" Column="2" TopLine="397"/>
+        <Caret Line="415" Column="64" TopLine="406"/>
       </Position26>
       <Position27>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="415" Column="64" TopLine="406"/>
+        <Caret Line="314" Column="70" TopLine="310"/>
       </Position27>
       <Position28>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="314" Column="70" TopLine="310"/>
+        <Caret Line="61" Column="48" TopLine="51"/>
       </Position28>
       <Position29>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="61" Column="48" TopLine="51"/>
+        <Caret Line="60" Column="48" TopLine="50"/>
       </Position29>
       <Position30>
         <Filename Value="penpaintcode.pas"/>
-        <Caret Line="60" Column="48" TopLine="50"/>
+        <Caret Line="211" Column="22" TopLine="195"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

@@ -4,13 +4,13 @@ object Form1: TForm1
   Top = 99
   Width = 628
   Caption = 'Form1'
-  ClientHeight = 451
+  ClientHeight = 471
   ClientWidth = 628
   Menu = MainMenu1
   OnClose = FormClose
   OnCreate = FormCreate
   OnResize = FormResize
-  LCLVersion = '2.2.2.0'
+  LCLVersion = '3.6.0.0'
   object BitBtn1: TBitBtn
     Left = 9
     Height = 32
@@ -129,7 +129,7 @@ object Form1: TForm1
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
-    Top = 428
+    Top = 448
     Width = 628
     Panels = <>
   end
@@ -162,11 +162,13 @@ object Form1: TForm1
   end
   object OpenPictureDialog1: TOpenPictureDialog
     OnCanClose = OpenPictureDialog1CanClose
+    Title = 'Open an image'
     Left = 600
     Top = 128
   end
   object SavePictureDialog1: TSavePictureDialog
     OnCanClose = SavePictureDialog1CanClose
+    Title = 'Save an image as'
     Left = 600
     Top = 192
   end
