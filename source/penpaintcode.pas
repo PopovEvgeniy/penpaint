@@ -85,7 +85,7 @@ implementation
 procedure window_setup();
 begin
  Application.Title:='PenPaint';
- Form1.Caption:='PenPaint 1.5.3';
+ Form1.Caption:='PenPaint 1.5.4';
  Form1.Font.Name:=Screen.MenuFont.Name;
  Form1.Font.Size:=14;
 end;
@@ -208,7 +208,8 @@ procedure set_canvas_size();
 begin
  Form1.Image1.Width:=StrToInt(Form1.LabeledEdit1.Text);
  Form1.Image1.Height:=StrToInt(Form1.LabeledEdit2.Text);
- Form1.Image1.Picture.Bitmap.SetSize(Form1.Image1.Width,Form1.Image1.Height);
+ Form1.Image1.Picture.Graphic.Width:=StrToInt(Form1.LabeledEdit1.Text);
+ Form1.Image1.Picture.Graphic.Height:=StrToInt(Form1.LabeledEdit2.Text);
  Form1.Image1.Canvas.FillRect(Form1.Image1.ClientRect);
 end;
 
