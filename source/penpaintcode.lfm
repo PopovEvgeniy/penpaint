@@ -7,18 +7,18 @@ object Form1: TForm1
   ClientHeight = 471
   ClientWidth = 628
   Menu = MainMenu1
+  LCLVersion = '4.0.0.1'
   OnClose = FormClose
   OnCreate = FormCreate
   OnResize = FormResize
-  LCLVersion = '3.6.0.0'
   object BitBtn1: TBitBtn
     Left = 9
     Height = 32
     Top = 13
     Width = 32
     Caption = 'BitBtn1'
-    OnClick = BitBtn1Click
     TabOrder = 0
+    OnClick = BitBtn1Click
   end
   object BitBtn2: TBitBtn
     Left = 48
@@ -26,8 +26,8 @@ object Form1: TForm1
     Top = 13
     Width = 32
     Caption = 'BitBtn1'
-    OnClick = BitBtn2Click
     TabOrder = 1
+    OnClick = BitBtn2Click
   end
   object BitBtn3: TBitBtn
     Left = 88
@@ -35,8 +35,8 @@ object Form1: TForm1
     Top = 13
     Width = 32
     Caption = 'BitBtn1'
-    OnClick = BitBtn3Click
     TabOrder = 2
+    OnClick = BitBtn3Click
   end
   object LabeledEdit1: TLabeledEdit
     Left = 176
@@ -70,8 +70,8 @@ object Form1: TForm1
     Top = 13
     Width = 32
     Caption = 'BitBtn1'
-    OnClick = BitBtn4Click
     TabOrder = 5
+    OnClick = BitBtn4Click
   end
   object LabeledEdit3: TLabeledEdit
     Left = 448
@@ -92,8 +92,8 @@ object Form1: TForm1
     Top = 13
     Width = 32
     Caption = 'BitBtn1'
-    OnClick = BitBtn5Click
     TabOrder = 7
+    OnClick = BitBtn5Click
   end
   object BitBtn6: TBitBtn
     Left = 560
@@ -101,8 +101,8 @@ object Form1: TForm1
     Top = 13
     Width = 32
     Caption = 'BitBtn1'
-    OnClick = BitBtn6Click
     TabOrder = 8
+    OnClick = BitBtn6Click
   end
   object ScrollBox1: TScrollBox
     Left = 9
