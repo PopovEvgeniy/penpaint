@@ -1,7 +1,6 @@
 unit penpaintcode; 
 
 {$mode objfpc}{$H+}
-{$R icon.res}
 
 interface
 
@@ -11,62 +10,62 @@ uses
 
 type
 
-  { TForm1 }
+  { TMainWindow }
 
-  TForm1 = class(TForm)
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
-    BitBtn3: TBitBtn;
-    BitBtn4: TBitBtn;
-    BitBtn5: TBitBtn;
-    BitBtn6: TBitBtn;
-    ColorDialog1: TColorDialog;
-    Image1: TImage;
-    LabeledEdit1: TLabeledEdit;
-    LabeledEdit2: TLabeledEdit;
-    LabeledEdit3: TLabeledEdit;
-    MainMenu1: TMainMenu;
-    MenuItem1: TMenuItem;
-    MenuItem10: TMenuItem;
-    MenuItem11: TMenuItem;
-    MenuItem2: TMenuItem;
-    MenuItem3: TMenuItem;
-    MenuItem4: TMenuItem;
-    MenuItem5: TMenuItem;
-    MenuItem6: TMenuItem;
-    MenuItem7: TMenuItem;
-    MenuItem8: TMenuItem;
-    MenuItem9: TMenuItem;
-    OpenPictureDialog1: TOpenPictureDialog;
-    SavePictureDialog1: TSavePictureDialog;
-    ScrollBox1: TScrollBox;
-    StatusBar1: TStatusBar;
-    procedure BitBtn1Click(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
-    procedure BitBtn3Click(Sender: TObject);
-    procedure BitBtn4Click(Sender: TObject);
-    procedure BitBtn5Click(Sender: TObject);
-    procedure BitBtn6Click(Sender: TObject);
+  TMainWindow = class(TForm)
+    NewBtn: TBitBtn;
+    OpenBtn: TBitBtn;
+    SaveBtn: TBitBtn;
+    SizeBtn: TBitBtn;
+    CanvasBtn: TBitBtn;
+    PenBtn: TBitBtn;
+    ColorDialog: TColorDialog;
+    Surface: TImage;
+    WidthField: TLabeledEdit;
+    HeightField: TLabeledEdit;
+    SizeField: TLabeledEdit;
+    MainMenu: TMainMenu;
+    FileMenu: TMenuItem;
+    AboutMenuItem: TMenuItem;
+    ShowHelpMenuItem: TMenuItem;
+    NewMenuItem: TMenuItem;
+    OpenMenuItem: TMenuItem;
+    SaveMenuItem: TMenuItem;
+    SaveAsMenuItem: TMenuItem;
+    ClipboardMenu: TMenuItem;
+    CopyMenuItem: TMenuItem;
+    PasteMenuItem: TMenuItem;
+    HelpMenu: TMenuItem;
+    OpenPictureDialog: TOpenPictureDialog;
+    SavePictureDialog: TSavePictureDialog;
+    ScrollBox: TScrollBox;
+    FileBar: TStatusBar;
+    procedure NewBtnClick(Sender: TObject);
+    procedure OpenBtnClick(Sender: TObject);
+    procedure SaveBtnClick(Sender: TObject);
+    procedure SizeBtnClick(Sender: TObject);
+    procedure CanvasBtnClick(Sender: TObject);
+    procedure PenBtnClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
-    procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
+    procedure SurfaceMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure Image1MouseEnter(Sender: TObject);
-    procedure Image1MouseLeave(Sender: TObject);
-    procedure Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
-    procedure Image1Resize(Sender: TObject);
-    procedure MenuItem10Click(Sender: TObject);
-    procedure MenuItem11Click(Sender: TObject);
-    procedure MenuItem2Click(Sender: TObject);
-    procedure MenuItem3Click(Sender: TObject);
-    procedure MenuItem4Click(Sender: TObject);
-    procedure MenuItem5Click(Sender: TObject);
-    procedure MenuItem7Click(Sender: TObject);
-    procedure MenuItem8Click(Sender: TObject);
-    procedure OpenPictureDialog1CanClose(Sender: TObject; var CanClose: boolean
+    procedure SurfaceMouseEnter(Sender: TObject);
+    procedure SurfaceMouseLeave(Sender: TObject);
+    procedure SurfaceMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure SurfaceResize(Sender: TObject);
+    procedure AboutMenuItemClick(Sender: TObject);
+    procedure ShowHelpMenuItemClick(Sender: TObject);
+    procedure NewMenuItemClick(Sender: TObject);
+    procedure OpenMenuItemClick(Sender: TObject);
+    procedure SaveMenuItemClick(Sender: TObject);
+    procedure SaveAsMenuItemClick(Sender: TObject);
+    procedure CopyMenuItemClick(Sender: TObject);
+    procedure PasteMenuItemClick(Sender: TObject);
+    procedure OpenPictureDialogCanClose(Sender: TObject; var CanClose: boolean
       );
-    procedure SavePictureDialog1CanClose(Sender: TObject; var CanClose: boolean
+    procedure SavePictureDialogCanClose(Sender: TObject; var CanClose: boolean
       );
   private
     { private declarations }
@@ -74,104 +73,109 @@ type
     { public declarations }
   end; 
 
-var Form1: TForm1;
+var MainWindow: TMainWindow;
 
 implementation
 
 {$R *.lfm}
 
-{ TForm1 }
+{ TMainWindow }
+
+function get_icon(const icon:string): string;
+begin
+ Result:=ExtractFilePath(Application.ExeName)+'icons'+DirectorySeparator+icon+'.bmp';
+end;
 
 procedure window_setup();
 begin
  Application.Title:='PenPaint';
- Form1.Caption:='PenPaint 1.5.5';
- Form1.Font.Name:=Screen.MenuFont.Name;
- Form1.Font.Size:=14;
+ MainWindow.Caption:='PenPaint 1.5.8';
+ MainWindow.Font.Name:=Screen.MenuFont.Name;
+ MainWindow.Font.Size:=14;
 end;
 
 procedure interface_setup();
 begin
- Form1.ScrollBox1.AutoScroll:=True;
- Form1.LabeledEdit1.NumbersOnly:=True;
- Form1.LabeledEdit2.NumbersOnly:=True;
- Form1.LabeledEdit3.NumbersOnly:=True;
- Form1.LabeledEdit1.Text:='';
- Form1.LabeledEdit2.Text:=Form1.LabeledEdit1.Text;
- Form1.LabeledEdit3.Text:=Form1.LabeledEdit1.Text;
- Form1.BitBtn1.ShowHint:=True;
- Form1.BitBtn2.ShowHint:=Form1.BitBtn1.ShowHint;
- Form1.BitBtn3.ShowHint:=Form1.BitBtn1.ShowHint;
- Form1.BitBtn4.ShowHint:=Form1.BitBtn1.ShowHint;
- Form1.BitBtn5.ShowHint:=Form1.BitBtn1.ShowHint;
- Form1.BitBtn6.ShowHint:=Form1.BitBtn1.ShowHint;
- Form1.BitBtn1.Caption:='';
- Form1.BitBtn2.Caption:=Form1.BitBtn1.Caption;
- Form1.BitBtn3.Caption:=Form1.BitBtn1.Caption;
- Form1.BitBtn4.Caption:=Form1.BitBtn1.Caption;
- Form1.BitBtn5.Caption:=Form1.BitBtn1.Caption;
- Form1.BitBtn6.Caption:=Form1.BitBtn1.Caption;
- Form1.BitBtn1.NumGlyphs:=1;
- Form1.BitBtn2.NumGlyphs:=Form1.BitBtn1.NumGlyphs;
- Form1.BitBtn3.NumGlyphs:=Form1.BitBtn1.NumGlyphs;
- Form1.BitBtn4.NumGlyphs:=Form1.BitBtn1.NumGlyphs;
- Form1.BitBtn5.NumGlyphs:=Form1.BitBtn1.NumGlyphs;
- Form1.BitBtn6.NumGlyphs:=Form1.BitBtn1.NumGlyphs;
- Form1.BitBtn1.Glyph.LoadFromResourceName(HINSTANCE,'NEW');
- Form1.BitBtn2.Glyph.LoadFromResourceName(HINSTANCE,'OPEN');
- Form1.BitBtn3.Glyph.LoadFromResourceName(HINSTANCE,'SAVE');
- Form1.BitBtn4.Glyph.LoadFromResourceName(HINSTANCE,'SIZE');
- Form1.BitBtn5.Glyph.LoadFromResourceName(HINSTANCE,'CANVAS');
- Form1.BitBtn6.Glyph.LoadFromResourceName(HINSTANCE,'PEN');
+ MainWindow.ScrollBox.AutoScroll:=True;
+ MainWindow.WidthField.NumbersOnly:=True;
+ MainWindow.HeightField.NumbersOnly:=True;
+ MainWindow.SizeField.NumbersOnly:=True;
+ MainWindow.WidthField.Text:='';
+ MainWindow.HeightField.Text:=MainWindow.WidthField.Text;
+ MainWindow.SizeField.Text:=MainWindow.WidthField.Text;
+ MainWindow.NewBtn.ShowHint:=True;
+ MainWindow.OpenBtn.ShowHint:=MainWindow.NewBtn.ShowHint;
+ MainWindow.SaveBtn.ShowHint:=MainWindow.NewBtn.ShowHint;
+ MainWindow.SizeBtn.ShowHint:=MainWindow.NewBtn.ShowHint;
+ MainWindow.CanvasBtn.ShowHint:=MainWindow.NewBtn.ShowHint;
+ MainWindow.PenBtn.ShowHint:=MainWindow.NewBtn.ShowHint;
+ MainWindow.NewBtn.Caption:='';
+ MainWindow.OpenBtn.Caption:=MainWindow.NewBtn.Caption;
+ MainWindow.SaveBtn.Caption:=MainWindow.NewBtn.Caption;
+ MainWindow.SizeBtn.Caption:=MainWindow.NewBtn.Caption;
+ MainWindow.CanvasBtn.Caption:=MainWindow.NewBtn.Caption;
+ MainWindow.PenBtn.Caption:=MainWindow.NewBtn.Caption;
+ MainWindow.NewBtn.NumGlyphs:=1;
+ MainWindow.OpenBtn.NumGlyphs:=MainWindow.NewBtn.NumGlyphs;
+ MainWindow.SaveBtn.NumGlyphs:=MainWindow.NewBtn.NumGlyphs;
+ MainWindow.SizeBtn.NumGlyphs:=MainWindow.NewBtn.NumGlyphs;
+ MainWindow.CanvasBtn.NumGlyphs:=MainWindow.NewBtn.NumGlyphs;
+ MainWindow.PenBtn.NumGlyphs:=MainWindow.NewBtn.NumGlyphs;
+ MainWindow.NewBtn.Glyph.LoadFromFile(get_icon('new'));
+ MainWindow.OpenBtn.Glyph.LoadFromFile(get_icon('open'));
+ MainWindow.SaveBtn.Glyph.LoadFromFile(get_icon('save'));
+ MainWindow.SizeBtn.Glyph.LoadFromFile(get_icon('size'));
+ MainWindow.CanvasBtn.Glyph.LoadFromFile(get_icon('canvas'));
+ MainWindow.PenBtn.Glyph.LoadFromFile(get_icon('pen'));
 end;
 
 procedure load_contex_help();
 begin
- Form1.BitBtn1.Hint:='Create a new image';
- Form1.BitBtn2.Hint:='Load an image from the file';
- Form1.BitBtn3.Hint:='Save an image to the file';
- Form1.BitBtn4.Hint:='Clear the current image and resize the canvas';
- Form1.BitBtn5.Hint:='Set the pen color';
- Form1.BitBtn6.Hint:='Set the background color';
+ MainWindow.NewBtn.Hint:='Create a new image';
+ MainWindow.OpenBtn.Hint:='Load an image from the file';
+ MainWindow.SaveBtn.Hint:='Save an image to the file';
+ MainWindow.SizeBtn.Hint:='Clear the current image and resize the canvas';
+ MainWindow.CanvasBtn.Hint:='Set the pen color';
+ MainWindow.PenBtn.Hint:='Set the background color';
 end;
 
 procedure shortcut_setup();
 begin
- Form1.MainMenu1.Items[0].Items[0].ShortCut:=TextToShortCut('Ctrl+N');
- Form1.MainMenu1.Items[0].Items[1].ShortCut:=TextToShortCut('Ctrl+O');
- Form1.MainMenu1.Items[0].Items[2].ShortCut:=TextToShortCut('Ctrl+S');
- Form1.MainMenu1.Items[0].Items[3].ShortCut:=TextToShortCut('Ctrl+Alt+S');
- Form1.MainMenu1.Items[1].Items[0].ShortCut:=TextToShortCut('Ctrl+C');
- Form1.MainMenu1.Items[1].Items[1].ShortCut:=TextToShortCut('Ctrl+V');
- Form1.MainMenu1.Items[2].Items[1].ShortCut:=TextToShortCut('F1');
+ MainWindow.MainMenu.Items[0].Items[0].ShortCut:=TextToShortCut('Ctrl+N');
+ MainWindow.MainMenu.Items[0].Items[1].ShortCut:=TextToShortCut('Ctrl+O');
+ MainWindow.MainMenu.Items[0].Items[2].ShortCut:=TextToShortCut('Ctrl+S');
+ MainWindow.MainMenu.Items[0].Items[3].ShortCut:=TextToShortCut('Ctrl+Alt+S');
+ MainWindow.MainMenu.Items[1].Items[0].ShortCut:=TextToShortCut('Ctrl+C');
+ MainWindow.MainMenu.Items[1].Items[1].ShortCut:=TextToShortCut('Ctrl+V');
+ MainWindow.MainMenu.Items[2].Items[1].ShortCut:=TextToShortCut('F1');
 end;
 
 procedure dialog_setup();
 begin
- Form1.OpenPictureDialog1.InitialDir:='';
- Form1.SavePictureDialog1.InitialDir:=Form1.OpenPictureDialog1.InitialDir;
- Form1.OpenPictureDialog1.Filter:='All supported formats|*.bmp;*.jpg;*.png;*.xpm';
- Form1.OpenPictureDialog1.FileName:='*.bmp;*.jpg;*.png;*.xpm';
- Form1.SavePictureDialog1.Filter:='Bitmaps|*.bmp|Pixmap|*.xpm|Portable Network Graphic|*.png|Joint Picture Expert Group|*.jpg';
- Form1.SavePictureDialog1.FilterIndex:=1;
+ MainWindow.OpenPictureDialog.InitialDir:='';
+ MainWindow.SavePictureDialog.InitialDir:=MainWindow.OpenPictureDialog.InitialDir;
+ MainWindow.OpenPictureDialog.Filter:='All supported formats|*.bmp;*.jpg;*.png;*.xpm';
+ MainWindow.OpenPictureDialog.FileName:='*.bmp;*.jpg;*.png;*.xpm';
+ MainWindow.SavePictureDialog.Filter:='Bitmaps|*.bmp|Pixmap|*.xpm|Portable Network Graphic|*.png|Joint Picture Expert Group|*.jpg';
+ MainWindow.SavePictureDialog.FilterIndex:=1;
 end;
 
 procedure canvas_setup();
 begin
- Form1.Image1.Parent.DoubleBuffered:=True;
- Form1.Image1.AutoSize:=True;
- Form1.Image1.Proportional:=False;
- Form1.Image1.Stretch:=False;
- Form1.Image1.Canvas.Brush.Style:=bsSolid;
- Form1.Image1.Canvas.Pen.Style:=psSolid;
- Form1.Image1.Canvas.Brush.Color:=clWhite;
- Form1.Image1.Canvas.Pen.Color:=clBlack;
+ MainWindow.Surface.Parent.DoubleBuffered:=True;
+ MainWindow.Surface.AutoSize:=True;
+ MainWindow.Surface.Proportional:=False;
+ MainWindow.Surface.Stretch:=False;
+ MainWindow.Surface.Canvas.Brush.Style:=bsSolid;
+ MainWindow.Surface.Canvas.Pen.Style:=psSolid;
+ MainWindow.Surface.Canvas.Brush.Color:=clWhite;
+ MainWindow.Surface.Canvas.Pen.Color:=clBlack;
 end;
 
 procedure resize_workspace();
 begin
-Form1.ScrollBox1.Width:=Form1.ClientWidth-10;
-Form1.ScrollBox1.Height:=Form1.ClientHeight-Form1.BitBtn2.Top-80;
+MainWindow.ScrollBox.Width:=MainWindow.ClientWidth-10;
+MainWindow.ScrollBox.Height:=MainWindow.ClientHeight-MainWindow.OpenBtn.Top-80;
 end;
 
 procedure setup();
@@ -189,49 +193,49 @@ procedure check_command_line();
 begin
  if ParamCount()>0 then
  begin
-  Form1.SavePictureDialog1.FileName:=ParamStr(1);
-  Form1.Image1.Picture.LoadFromFile(Form1.SavePictureDialog1.FileName);
-  Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
+  MainWindow.SavePictureDialog.FileName:=ParamStr(1);
+  MainWindow.Surface.Picture.LoadFromFile(MainWindow.SavePictureDialog.FileName);
+  MainWindow.FileBar.SimpleText:=MainWindow.SavePictureDialog.FileName;
  end;
 
 end;
 
 procedure create_image();
 begin
- Form1.LabeledEdit3.Text:='5';
- Form1.Image1.Canvas.FillRect(Form1.Image1.Canvas.ClipRect);
- Form1.SavePictureDialog1.FileName:='';
- Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
+ MainWindow.SizeField.Text:='5';
+ MainWindow.Surface.Canvas.FillRect(MainWindow.Surface.Canvas.ClipRect);
+ MainWindow.SavePictureDialog.FileName:='';
+ MainWindow.FileBar.SimpleText:=MainWindow.SavePictureDialog.FileName;
 end;
 
 procedure set_canvas_size();
 begin
- Form1.Image1.Width:=StrToInt(Form1.LabeledEdit1.Text);
- Form1.Image1.Height:=StrToInt(Form1.LabeledEdit2.Text);
- Form1.Image1.Picture.Graphic.Width:=StrToInt(Form1.LabeledEdit1.Text);
- Form1.Image1.Picture.Graphic.Height:=StrToInt(Form1.LabeledEdit2.Text);
- Form1.Image1.Canvas.FillRect(Form1.Image1.ClientRect);
+ MainWindow.Surface.Width:=StrToInt(MainWindow.WidthField.Text);
+ MainWindow.Surface.Height:=StrToInt(MainWindow.HeightField.Text);
+ MainWindow.Surface.Picture.Graphic.Width:=StrToInt(MainWindow.WidthField.Text);
+ MainWindow.Surface.Picture.Graphic.Height:=StrToInt(MainWindow.HeightField.Text);
+ MainWindow.Surface.Canvas.FillRect(MainWindow.Surface.ClientRect);
 end;
 
 procedure save_to_clipboard();
 begin
- Form1.Image1.Picture.SaveToClipboardFormat(CF_BITMAP);
+ MainWindow.Surface.Picture.SaveToClipboardFormat(CF_BITMAP);
 end;
 
 procedure load_from_clipboard();
 begin
- Form1.Image1.Picture.LoadFromClipboardFormat(CF_BITMAP);
+ MainWindow.Surface.Picture.LoadFromClipboardFormat(CF_BITMAP);
 end;
 
 procedure save_to_file();
 begin
- if Form1.SavePictureDialog1.FileName<>'' then
+ if MainWindow.SavePictureDialog.FileName<>'' then
  begin
-  Form1.Image1.Picture.SaveToFile(Form1.SavePictureDialog1.FileName);
+  MainWindow.Surface.Picture.SaveToFile(MainWindow.SavePictureDialog.FileName);
  end
  else
  begin
-  Form1.SavePictureDialog1.Execute();
+  MainWindow.SavePictureDialog.Execute();
  end;
 
 end;
@@ -239,182 +243,182 @@ end;
 procedure show_help();
 var help:string;
 begin
- help:=ExtractFilePath(Application.ExeName)+'help'+DirectorySeparator+'help.html';
+ help:=ExtractFilePath(Application.ExeName)+'help.htm';
  OpenDocument(help);
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TMainWindow.FormCreate(Sender: TObject);
 begin
  setup();
  create_image();
  check_command_line();
 end;
 
-procedure TForm1.BitBtn1Click(Sender: TObject);
+procedure TMainWindow.NewBtnClick(Sender: TObject);
 begin
  create_image();
 end;
 
-procedure TForm1.BitBtn2Click(Sender: TObject);
+procedure TMainWindow.OpenBtnClick(Sender: TObject);
 begin
- Form1.OpenPictureDialog1.Execute();
+ MainWindow.OpenPictureDialog.Execute();
 end;
 
-procedure TForm1.BitBtn3Click(Sender: TObject);
+procedure TMainWindow.SaveBtnClick(Sender: TObject);
 begin
  save_to_file();
 end;
 
-procedure TForm1.BitBtn4Click(Sender: TObject);
+procedure TMainWindow.SizeBtnClick(Sender: TObject);
 begin
  set_canvas_size();
  resize_workspace();
 end;
 
-procedure TForm1.BitBtn5Click(Sender: TObject);
+procedure TMainWindow.CanvasBtnClick(Sender: TObject);
 begin
- if Form1.ColorDialog1.Execute()=True then
+ if MainWindow.ColorDialog.Execute()=True then
  begin
-  Form1.Image1.Canvas.Pen.Color:=Form1.ColorDialog1.Color;
+  MainWindow.Surface.Canvas.Pen.Color:=MainWindow.ColorDialog.Color;
  end;
 
 end;
 
-procedure TForm1.BitBtn6Click(Sender: TObject);
+procedure TMainWindow.PenBtnClick(Sender: TObject);
 begin
- if Form1.ColorDialog1.Execute()=True then
+ if MainWindow.ColorDialog.Execute()=True then
  begin
-  Form1.Image1.Canvas.Brush.Color:=Form1.ColorDialog1.Color;
-  Form1.Image1.Canvas.FillRect(Form1.Image1.Canvas.ClipRect);
+  MainWindow.Surface.Canvas.Brush.Color:=MainWindow.ColorDialog.Color;
+  MainWindow.Surface.Canvas.FillRect(MainWindow.Surface.Canvas.ClipRect);
  end;
 
 end;
 
-procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+procedure TMainWindow.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
- if Form1.SavePictureDialog1.FileName<>'' then
+ if MainWindow.SavePictureDialog.FileName<>'' then
  begin
-  Form1.Image1.Picture.SaveToFile(Form1.SavePictureDialog1.FileName);
+  MainWindow.Surface.Picture.SaveToFile(MainWindow.SavePictureDialog.FileName);
  end
  else
  begin
   if MessageDlg(Application.Title,'An image is not saved. Do you want to save it now?',mtCustom,mbYesNo,0)=mrYes then
   begin
-   Form1.SavePictureDialog1.Execute();
+   MainWindow.SavePictureDialog.Execute();
   end;
 
 end;
 
 end;
 
-procedure TForm1.FormResize(Sender: TObject);
+procedure TMainWindow.FormResize(Sender: TObject);
 begin
  resize_workspace();
 end;
 
-procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+procedure TMainWindow.SurfaceMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
  if Button=mbRight then
  begin
   if ssShift in Shift then
   begin
-   Form1.Image1.Canvas.Pen.Color:=Form1.Image1.Canvas.Pixels[X,Y];
+   MainWindow.Surface.Canvas.Pen.Color:=MainWindow.Surface.Canvas.Pixels[X,Y];
   end
   else
   begin
-   Form1.Image1.Canvas.Brush.Color:=Form1.Image1.Canvas.Pen.Color;
-   Form1.Image1.Canvas.FloodFill(X,Y,Form1.Image1.Canvas.Pixels[X,Y],fsSurface);
+   MainWindow.Surface.Canvas.Brush.Color:=MainWindow.Surface.Canvas.Pen.Color;
+   MainWindow.Surface.Canvas.FloodFill(X,Y,MainWindow.Surface.Canvas.Pixels[X,Y],fsSurface);
   end;
 
  end;
 
 end;
 
-procedure TForm1.Image1MouseEnter(Sender: TObject);
+procedure TMainWindow.SurfaceMouseEnter(Sender: TObject);
 begin
  Screen.Cursor:=crCross;
- Form1.Image1.Canvas.Pen.Width:=StrToInt(Form1.LabeledEdit3.Text);
+ MainWindow.Surface.Canvas.Pen.Width:=StrToInt(MainWindow.SizeField.Text);
 end;
 
-procedure TForm1.Image1MouseLeave(Sender: TObject);
+procedure TMainWindow.SurfaceMouseLeave(Sender: TObject);
 begin
  Screen.Cursor:=crDefault;
 end;
 
-procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X,
+procedure TMainWindow.SurfaceMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
 begin
  if ssLeft in Shift then
  begin
-  Form1.Image1.Canvas.MoveTo(X,Y);
-  Form1.Image1.Canvas.LineTo(X,Y);
+  MainWindow.Surface.Canvas.MoveTo(X,Y);
+  MainWindow.Surface.Canvas.LineTo(X,Y);
  end;
 
 end;
 
-procedure TForm1.Image1Resize(Sender: TObject);
+procedure TMainWindow.SurfaceResize(Sender: TObject);
 begin
- Form1.LabeledEdit1.Text:=IntToStr(Form1.Image1.Width);
- Form1.LabeledEdit2.Text:=IntToStr(Form1.Image1.Height);
+ MainWindow.WidthField.Text:=IntToStr(MainWindow.Surface.Width);
+ MainWindow.HeightField.Text:=IntToStr(MainWindow.Surface.Height);
 end;
 
-procedure TForm1.MenuItem10Click(Sender: TObject);
+procedure TMainWindow.AboutMenuItemClick(Sender: TObject);
 begin
  ShowMessage('PenPaint is a simple drawing program by Popov Evgeniy Alekseyevich');
 end;
 
-procedure TForm1.MenuItem11Click(Sender: TObject);
+procedure TMainWindow.ShowHelpMenuItemClick(Sender: TObject);
 begin
  show_help();
 end;
 
-procedure TForm1.MenuItem2Click(Sender: TObject);
+procedure TMainWindow.NewMenuItemClick(Sender: TObject);
 begin
  create_image();
 end;
 
-procedure TForm1.MenuItem3Click(Sender: TObject);
+procedure TMainWindow.OpenMenuItemClick(Sender: TObject);
 begin
- Form1.OpenPictureDialog1.Execute();
+ MainWindow.OpenPictureDialog.Execute();
 end;
 
-procedure TForm1.MenuItem4Click(Sender: TObject);
+procedure TMainWindow.SaveMenuItemClick(Sender: TObject);
 begin
  save_to_file();
 end;
 
-procedure TForm1.MenuItem5Click(Sender: TObject);
+procedure TMainWindow.SaveAsMenuItemClick(Sender: TObject);
 begin
- Form1.SavePictureDialog1.Execute();
+ MainWindow.SavePictureDialog.Execute();
 end;
 
-procedure TForm1.MenuItem7Click(Sender: TObject);
+procedure TMainWindow.CopyMenuItemClick(Sender: TObject);
 begin
  save_to_clipboard();
 end;
 
-procedure TForm1.MenuItem8Click(Sender: TObject);
+procedure TMainWindow.PasteMenuItemClick(Sender: TObject);
 begin
  load_from_clipboard();
 end;
 
-procedure TForm1.OpenPictureDialog1CanClose(Sender: TObject;
+procedure TMainWindow.OpenPictureDialogCanClose(Sender: TObject;
   var CanClose: boolean);
 begin
- Form1.SavePictureDialog1.FileName:=Form1.OpenPictureDialog1.FileName;
- Form1.Image1.Picture.LoadFromFile(Form1.SavePictureDialog1.FileName);
- Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
+ MainWindow.SavePictureDialog.FileName:=MainWindow.OpenPictureDialog.FileName;
+ MainWindow.Surface.Picture.LoadFromFile(MainWindow.SavePictureDialog.FileName);
+ MainWindow.FileBar.SimpleText:=MainWindow.SavePictureDialog.FileName;
 end;
 
-procedure TForm1.SavePictureDialog1CanClose(Sender: TObject;
+procedure TMainWindow.SavePictureDialogCanClose(Sender: TObject;
   var CanClose: boolean);
 begin
- if SavePictureDialog1.FileName<>'' then
+ if SavePictureDialog.FileName<>'' then
  begin
-  Form1.SavePictureDialog1.FileName:=ExtractFileNameWithoutExt(Form1.SavePictureDialog1.FileName)+'.'+Form1.SavePictureDialog1.GetFilterExt();
-  Form1.Image1.Picture.SaveToFile(Form1.SavePictureDialog1.FileName);
-  Form1.StatusBar1.SimpleText:=Form1.SavePictureDialog1.FileName;
+  MainWindow.SavePictureDialog.FileName:=ExtractFileNameWithoutExt(MainWindow.SavePictureDialog.FileName)+'.'+MainWindow.SavePictureDialog.GetFilterExt();
+  MainWindow.Surface.Picture.SaveToFile(MainWindow.SavePictureDialog.FileName);
+  MainWindow.FileBar.SimpleText:=MainWindow.SavePictureDialog.FileName;
  end;
 
 end;

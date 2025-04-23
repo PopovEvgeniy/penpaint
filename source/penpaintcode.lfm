@@ -1,110 +1,110 @@
-object Form1: TForm1
+object MainWindow: TMainWindow
   Left = 244
   Height = 471
   Top = 99
   Width = 628
-  Caption = 'Form1'
+  Caption = 'PenPaint'
   ClientHeight = 471
   ClientWidth = 628
-  Menu = MainMenu1
-  LCLVersion = '4.0.0.1'
+  Menu = MainMenu
+  LCLVersion = '4.0.0.3'
   OnClose = FormClose
   OnCreate = FormCreate
   OnResize = FormResize
-  object BitBtn1: TBitBtn
+  object NewBtn: TBitBtn
     Left = 9
     Height = 32
     Top = 13
     Width = 32
-    Caption = 'BitBtn1'
+    Caption = 'New'
     TabOrder = 0
-    OnClick = BitBtn1Click
+    OnClick = NewBtnClick
   end
-  object BitBtn2: TBitBtn
+  object OpenBtn: TBitBtn
     Left = 48
     Height = 32
     Top = 13
     Width = 32
-    Caption = 'BitBtn1'
+    Caption = 'Open'
     TabOrder = 1
-    OnClick = BitBtn2Click
+    OnClick = OpenBtnClick
   end
-  object BitBtn3: TBitBtn
+  object SaveBtn: TBitBtn
     Left = 88
     Height = 32
     Top = 13
     Width = 32
-    Caption = 'BitBtn1'
+    Caption = 'Save'
     TabOrder = 2
-    OnClick = BitBtn3Click
+    OnClick = SaveBtnClick
   end
-  object LabeledEdit1: TLabeledEdit
+  object WidthField: TLabeledEdit
     Left = 176
     Height = 23
     Top = 16
     Width = 56
-    EditLabel.Height = 15
+    EditLabel.Height = 23
     EditLabel.Width = 32
     EditLabel.Caption = 'Width'
     EditLabel.ParentColor = False
     LabelPosition = lpLeft
     TabOrder = 3
-    Text = 'LabeledEdit1'
+    Text = 'WidthField'
   end
-  object LabeledEdit2: TLabeledEdit
+  object HeightField: TLabeledEdit
     Left = 296
     Height = 23
     Top = 16
     Width = 56
-    EditLabel.Height = 15
+    EditLabel.Height = 23
     EditLabel.Width = 36
     EditLabel.Caption = 'Height'
     EditLabel.ParentColor = False
     LabelPosition = lpLeft
     TabOrder = 4
-    Text = 'LabeledEdit2'
+    Text = 'HeightField'
   end
-  object BitBtn4: TBitBtn
+  object SizeBtn: TBitBtn
     Left = 368
     Height = 32
     Top = 13
     Width = 32
-    Caption = 'BitBtn1'
+    Caption = 'Set the canvas size'
     TabOrder = 5
-    OnClick = BitBtn4Click
+    OnClick = SizeBtnClick
   end
-  object LabeledEdit3: TLabeledEdit
+  object SizeField: TLabeledEdit
     Left = 448
     Height = 23
     Top = 16
     Width = 56
-    EditLabel.Height = 15
+    EditLabel.Height = 23
     EditLabel.Width = 20
     EditLabel.Caption = 'Size'
     EditLabel.ParentColor = False
     LabelPosition = lpLeft
     TabOrder = 6
-    Text = 'LabeledEdit3'
+    Text = 'SizeField'
   end
-  object BitBtn5: TBitBtn
+  object CanvasBtn: TBitBtn
     Left = 520
     Height = 32
     Top = 13
     Width = 32
-    Caption = 'BitBtn1'
+    Caption = 'Set the canvas color'
     TabOrder = 7
-    OnClick = BitBtn5Click
+    OnClick = CanvasBtnClick
   end
-  object BitBtn6: TBitBtn
+  object PenBtn: TBitBtn
     Left = 560
     Height = 32
     Top = 13
     Width = 32
-    Caption = 'BitBtn1'
+    Caption = 'Set the pen color'
     TabOrder = 8
-    OnClick = BitBtn6Click
+    OnClick = PenBtnClick
   end
-  object ScrollBox1: TScrollBox
+  object ScrollBox: TScrollBox
     Left = 9
     Height = 472
     Top = 56
@@ -114,26 +114,26 @@ object Form1: TForm1
     ClientHeight = 468
     ClientWidth = 547
     TabOrder = 9
-    object Image1: TImage
+    object Surface: TImage
       Left = 5
       Height = 440
       Top = 0
       Width = 531
-      OnMouseDown = Image1MouseDown
-      OnMouseEnter = Image1MouseEnter
-      OnMouseLeave = Image1MouseLeave
-      OnMouseMove = Image1MouseMove
-      OnResize = Image1Resize
+      OnMouseDown = SurfaceMouseDown
+      OnMouseEnter = SurfaceMouseEnter
+      OnMouseLeave = SurfaceMouseLeave
+      OnMouseMove = SurfaceMouseMove
+      OnResize = SurfaceResize
     end
   end
-  object StatusBar1: TStatusBar
+  object FileBar: TStatusBar
     Left = 0
     Height = 23
     Top = 448
     Width = 628
     Panels = <>
   end
-  object ColorDialog1: TColorDialog
+  object ColorDialog: TColorDialog
     Color = clBlack
     CustomColors.Strings = (
       'ColorA=000000'
@@ -160,60 +160,60 @@ object Form1: TForm1
     Left = 600
     Top = 64
   end
-  object OpenPictureDialog1: TOpenPictureDialog
-    OnCanClose = OpenPictureDialog1CanClose
+  object OpenPictureDialog: TOpenPictureDialog
+    OnCanClose = OpenPictureDialogCanClose
     Title = 'Open an image'
     Left = 600
     Top = 128
   end
-  object SavePictureDialog1: TSavePictureDialog
-    OnCanClose = SavePictureDialog1CanClose
+  object SavePictureDialog: TSavePictureDialog
+    OnCanClose = SavePictureDialogCanClose
     Title = 'Save an image as'
     Left = 600
     Top = 192
   end
-  object MainMenu1: TMainMenu
+  object MainMenu: TMainMenu
     Left = 600
     Top = 256
-    object MenuItem1: TMenuItem
+    object FileMenu: TMenuItem
       Caption = 'File'
-      object MenuItem2: TMenuItem
+      object NewMenuItem: TMenuItem
         Caption = 'New'
-        OnClick = MenuItem2Click
+        OnClick = NewMenuItemClick
       end
-      object MenuItem3: TMenuItem
+      object OpenMenuItem: TMenuItem
         Caption = 'Open'
-        OnClick = MenuItem3Click
+        OnClick = OpenMenuItemClick
       end
-      object MenuItem4: TMenuItem
+      object SaveMenuItem: TMenuItem
         Caption = 'Save'
-        OnClick = MenuItem4Click
+        OnClick = SaveMenuItemClick
       end
-      object MenuItem5: TMenuItem
+      object SaveAsMenuItem: TMenuItem
         Caption = 'Save as'
-        OnClick = MenuItem5Click
+        OnClick = SaveAsMenuItemClick
       end
     end
-    object MenuItem6: TMenuItem
+    object ClipboardMenu: TMenuItem
       Caption = 'ClipBoard'
-      object MenuItem7: TMenuItem
+      object CopyMenuItem: TMenuItem
         Caption = 'Copy'
-        OnClick = MenuItem7Click
+        OnClick = CopyMenuItemClick
       end
-      object MenuItem8: TMenuItem
+      object PasteMenuItem: TMenuItem
         Caption = 'Paste'
-        OnClick = MenuItem8Click
+        OnClick = PasteMenuItemClick
       end
     end
-    object MenuItem9: TMenuItem
+    object HelpMenu: TMenuItem
       Caption = 'Help'
-      object MenuItem10: TMenuItem
+      object AboutMenuItem: TMenuItem
         Caption = 'About PenPaint'
-        OnClick = MenuItem10Click
+        OnClick = AboutMenuItemClick
       end
-      object MenuItem11: TMenuItem
+      object ShowHelpMenuItem: TMenuItem
         Caption = 'Show help'
-        OnClick = MenuItem11Click
+        OnClick = ShowHelpMenuItemClick
       end
     end
   end
