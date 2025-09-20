@@ -63,10 +63,8 @@ type
     procedure SaveAsMenuItemClick(Sender: TObject);
     procedure CopyMenuItemClick(Sender: TObject);
     procedure PasteMenuItemClick(Sender: TObject);
-    procedure OpenPictureDialogCanClose(Sender: TObject; var CanClose: boolean
-      );
-    procedure SavePictureDialogCanClose(Sender: TObject; var CanClose: boolean
-      );
+    procedure OpenPictureDialogCanClose(Sender: TObject; var CanClose: boolean);
+    procedure SavePictureDialogCanClose(Sender: TObject; var CanClose: boolean);
   private
     { private declarations }
   public
@@ -89,7 +87,7 @@ end;
 procedure window_setup();
 begin
  Application.Title:='PenPaint';
- MainWindow.Caption:='PenPaint 1.5.8';
+ MainWindow.Caption:='PenPaint 1.5.9';
  MainWindow.Font.Name:=Screen.MenuFont.Name;
  MainWindow.Font.Size:=14;
 end;

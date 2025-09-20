@@ -1,12 +1,12 @@
                                          PenPaint
                                          
-                                      Version 1.5.8
+                                      Version 1.5.9
 
-Program description
+The program description.
 
 PenPant is a simple graphic editor by Popov Evgeniy Alekseyevich. It is similar to MyPaint.
 
-About program modification
+The source code.
 
 The code is included in the source.zip archive.
-It can be compiled under Lazarus 4.0 RC3 or higher.
+It can be compiled under Lazarus 4.2 or higher.
