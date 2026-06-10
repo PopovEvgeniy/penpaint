@@ -1,6 +1,12 @@
-unit penpaintcode; 
+unit penpaintcode;
 
-{$mode objfpc}{$H+}
+{
+ This sofware was made by Popov Evgeniy Alekseyevich.
+ It is distributed under the GNU GENERAL PUBLIC LICENSE (Version 2 or higher).
+}
+
+{$mode objfpc}
+{$H+}
 
 interface
 
@@ -66,7 +72,20 @@ type
     procedure OpenPictureDialogCanClose(Sender: TObject; var CanClose: boolean);
     procedure SavePictureDialogCanClose(Sender: TObject; var CanClose: boolean);
   private
-    { private declarations }
+    procedure window_setup();
+    procedure interface_setup();
+    procedure load_contex_help();
+    procedure shortcut_setup();
+    procedure dialog_setup();
+    procedure canvas_setup();
+    procedure resize_workspace();
+    procedure setup();
+    procedure check_command_line();
+    procedure create_image();
+    procedure set_canvas_size();
+    procedure save_to_clipboard();
+    procedure load_from_clipboard();
+    procedure save_to_file();
   public
     { public declarations }
   end; 
@@ -84,225 +103,218 @@ begin
  Result:=ExtractFilePath(Application.ExeName)+'icons'+DirectorySeparator+icon+'.bmp';
 end;
 
-procedure window_setup();
+procedure TMainWindow.window_setup();
 begin
  Application.Title:='PenPaint';
- MainWindow.Caption:='PenPaint 1.5.9';
- MainWindow.Font.Name:=Screen.MenuFont.Name;
- MainWindow.Font.Size:=14;
+ Self.Caption:='PenPaint 1.6.1';
+ Self.Font.Name:=Screen.MenuFont.Name;
+ Self.Font.Size:=14;
 end;
 
-procedure interface_setup();
+procedure TMainWindow.interface_setup();
 begin
- MainWindow.ScrollBox.AutoScroll:=True;
- MainWindow.WidthField.NumbersOnly:=True;
- MainWindow.HeightField.NumbersOnly:=True;
- MainWindow.SizeField.NumbersOnly:=True;
- MainWindow.WidthField.Text:='';
- MainWindow.HeightField.Text:=MainWindow.WidthField.Text;
- MainWindow.SizeField.Text:=MainWindow.WidthField.Text;
- MainWindow.NewBtn.ShowHint:=True;
- MainWindow.OpenBtn.ShowHint:=MainWindow.NewBtn.ShowHint;
- MainWindow.SaveBtn.ShowHint:=MainWindow.NewBtn.ShowHint;
- MainWindow.SizeBtn.ShowHint:=MainWindow.NewBtn.ShowHint;
- MainWindow.CanvasBtn.ShowHint:=MainWindow.NewBtn.ShowHint;
- MainWindow.PenBtn.ShowHint:=MainWindow.NewBtn.ShowHint;
- MainWindow.NewBtn.Caption:='';
- MainWindow.OpenBtn.Caption:=MainWindow.NewBtn.Caption;
- MainWindow.SaveBtn.Caption:=MainWindow.NewBtn.Caption;
- MainWindow.SizeBtn.Caption:=MainWindow.NewBtn.Caption;
- MainWindow.CanvasBtn.Caption:=MainWindow.NewBtn.Caption;
- MainWindow.PenBtn.Caption:=MainWindow.NewBtn.Caption;
- MainWindow.NewBtn.NumGlyphs:=1;
- MainWindow.OpenBtn.NumGlyphs:=MainWindow.NewBtn.NumGlyphs;
- MainWindow.SaveBtn.NumGlyphs:=MainWindow.NewBtn.NumGlyphs;
- MainWindow.SizeBtn.NumGlyphs:=MainWindow.NewBtn.NumGlyphs;
- MainWindow.CanvasBtn.NumGlyphs:=MainWindow.NewBtn.NumGlyphs;
- MainWindow.PenBtn.NumGlyphs:=MainWindow.NewBtn.NumGlyphs;
- MainWindow.NewBtn.Glyph.LoadFromFile(get_icon('new'));
- MainWindow.OpenBtn.Glyph.LoadFromFile(get_icon('open'));
- MainWindow.SaveBtn.Glyph.LoadFromFile(get_icon('save'));
- MainWindow.SizeBtn.Glyph.LoadFromFile(get_icon('size'));
- MainWindow.CanvasBtn.Glyph.LoadFromFile(get_icon('canvas'));
- MainWindow.PenBtn.Glyph.LoadFromFile(get_icon('pen'));
+ Self.ScrollBox.AutoScroll:=True;
+ Self.WidthField.NumbersOnly:=True;
+ Self.HeightField.NumbersOnly:=True;
+ Self.SizeField.NumbersOnly:=True;
+ Self.WidthField.Text:='';
+ Self.HeightField.Text:='';
+ Self.SizeField.Text:='';
+ Self.NewBtn.ShowHint:=True;
+ Self.OpenBtn.ShowHint:=True;
+ Self.SaveBtn.ShowHint:=True;
+ Self.SizeBtn.ShowHint:=True;
+ Self.CanvasBtn.ShowHint:=True;
+ Self.PenBtn.ShowHint:=True;
+ Self.NewBtn.Caption:='';
+ Self.OpenBtn.Caption:='';
+ Self.SaveBtn.Caption:='';
+ Self.SizeBtn.Caption:='';
+ Self.CanvasBtn.Caption:='';
+ Self.PenBtn.Caption:='';
+ Self.NewBtn.NumGlyphs:=1;
+ Self.OpenBtn.NumGlyphs:=1;
+ Self.SaveBtn.NumGlyphs:=1;
+ Self.SizeBtn.NumGlyphs:=1;
+ Self.CanvasBtn.NumGlyphs:=1;
+ Self.PenBtn.NumGlyphs:=1;
+ Self.NewBtn.Glyph.LoadFromFile(get_icon('new'));
+ Self.OpenBtn.Glyph.LoadFromFile(get_icon('open'));
+ Self.SaveBtn.Glyph.LoadFromFile(get_icon('save'));
+ Self.SizeBtn.Glyph.LoadFromFile(get_icon('size'));
+ Self.CanvasBtn.Glyph.LoadFromFile(get_icon('canvas'));
+ Self.PenBtn.Glyph.LoadFromFile(get_icon('pen'));
 end;
 
-procedure load_contex_help();
+procedure TMainWindow.load_contex_help();
 begin
- MainWindow.NewBtn.Hint:='Create a new image';
- MainWindow.OpenBtn.Hint:='Load an image from the file';
- MainWindow.SaveBtn.Hint:='Save an image to the file';
- MainWindow.SizeBtn.Hint:='Clear the current image and resize the canvas';
- MainWindow.CanvasBtn.Hint:='Set the pen color';
- MainWindow.PenBtn.Hint:='Set the background color';
+ Self.NewBtn.Hint:='Create a new image';
+ Self.OpenBtn.Hint:='Load an image from the file';
+ Self.SaveBtn.Hint:='Save an image to the file';
+ Self.SizeBtn.Hint:='Clear the current image and resize the canvas';
+ Self.CanvasBtn.Hint:='Set the pen color';
+ Self.PenBtn.Hint:='Set the background color';
 end;
 
-procedure shortcut_setup();
+procedure TMainWindow.shortcut_setup();
 begin
- MainWindow.MainMenu.Items[0].Items[0].ShortCut:=TextToShortCut('Ctrl+N');
- MainWindow.MainMenu.Items[0].Items[1].ShortCut:=TextToShortCut('Ctrl+O');
- MainWindow.MainMenu.Items[0].Items[2].ShortCut:=TextToShortCut('Ctrl+S');
- MainWindow.MainMenu.Items[0].Items[3].ShortCut:=TextToShortCut('Ctrl+Alt+S');
- MainWindow.MainMenu.Items[1].Items[0].ShortCut:=TextToShortCut('Ctrl+C');
- MainWindow.MainMenu.Items[1].Items[1].ShortCut:=TextToShortCut('Ctrl+V');
- MainWindow.MainMenu.Items[2].Items[1].ShortCut:=TextToShortCut('F1');
+ Self.MainMenu.Items[0].Items[0].ShortCut:=TextToShortCut('Ctrl+N');
+ Self.MainMenu.Items[0].Items[1].ShortCut:=TextToShortCut('Ctrl+O');
+ Self.MainMenu.Items[0].Items[2].ShortCut:=TextToShortCut('Ctrl+S');
+ Self.MainMenu.Items[0].Items[3].ShortCut:=TextToShortCut('Ctrl+Alt+S');
+ Self.MainMenu.Items[1].Items[0].ShortCut:=TextToShortCut('Ctrl+C');
+ Self.MainMenu.Items[1].Items[1].ShortCut:=TextToShortCut('Ctrl+V');
+ Self.MainMenu.Items[2].Items[1].ShortCut:=TextToShortCut('F1');
 end;
 
-procedure dialog_setup();
+procedure TMainWindow.dialog_setup();
 begin
- MainWindow.OpenPictureDialog.InitialDir:='';
- MainWindow.SavePictureDialog.InitialDir:=MainWindow.OpenPictureDialog.InitialDir;
- MainWindow.OpenPictureDialog.Filter:='All supported formats|*.bmp;*.jpg;*.png;*.xpm';
- MainWindow.OpenPictureDialog.FileName:='*.bmp;*.jpg;*.png;*.xpm';
- MainWindow.SavePictureDialog.Filter:='Bitmaps|*.bmp|Pixmap|*.xpm|Portable Network Graphic|*.png|Joint Picture Expert Group|*.jpg';
- MainWindow.SavePictureDialog.FilterIndex:=1;
+ Self.OpenPictureDialog.InitialDir:='';
+ Self.SavePictureDialog.InitialDir:=Self.OpenPictureDialog.InitialDir;
+ Self.OpenPictureDialog.Filter:='All supported formats|*.bmp;*.jpg;*.png;*.xpm';
+ Self.OpenPictureDialog.FileName:='*.bmp;*.jpg;*.png;*.xpm';
+ Self.SavePictureDialog.Filter:='Bitmaps|*.bmp|Pixmap|*.xpm|Portable Network Graphic|*.png|Joint Picture Expert Group|*.jpg';
+ Self.SavePictureDialog.FilterIndex:=1;
 end;
 
-procedure canvas_setup();
+procedure TMainWindow.canvas_setup();
 begin
- MainWindow.Surface.Parent.DoubleBuffered:=True;
- MainWindow.Surface.AutoSize:=True;
- MainWindow.Surface.Proportional:=False;
- MainWindow.Surface.Stretch:=False;
- MainWindow.Surface.Canvas.Brush.Style:=bsSolid;
- MainWindow.Surface.Canvas.Pen.Style:=psSolid;
- MainWindow.Surface.Canvas.Brush.Color:=clWhite;
- MainWindow.Surface.Canvas.Pen.Color:=clBlack;
+ Self.Surface.Parent.DoubleBuffered:=True;
+ Self.Surface.AutoSize:=True;
+ Self.Surface.Proportional:=False;
+ Self.Surface.Stretch:=False;
+ Self.Surface.Canvas.Brush.Style:=bsSolid;
+ Self.Surface.Canvas.Pen.Style:=psSolid;
+ Self.Surface.Canvas.Brush.Color:=clWhite;
+ Self.Surface.Canvas.Pen.Color:=clBlack;
 end;
 
-procedure resize_workspace();
+procedure TMainWindow.resize_workspace();
 begin
-MainWindow.ScrollBox.Width:=MainWindow.ClientWidth-10;
-MainWindow.ScrollBox.Height:=MainWindow.ClientHeight-MainWindow.OpenBtn.Top-80;
+ Self.ScrollBox.Width:=Self.ClientWidth-10;
+ Self.ScrollBox.Height:=Self.ClientHeight-Self.OpenBtn.Top-80;
 end;
 
-procedure setup();
+procedure TMainWindow.setup();
 begin
- window_setup();
- interface_setup();
- load_contex_help();
- shortcut_setup();
- dialog_setup();
- canvas_setup();
- resize_workspace();
+ Self.window_setup();
+ Self.interface_setup();
+ Self.load_contex_help();
+ Self.shortcut_setup();
+ Self.dialog_setup();
+ Self.canvas_setup();
+ Self.resize_workspace();
 end;
 
-procedure check_command_line();
+procedure TMainWindow.check_command_line();
 begin
  if ParamCount()>0 then
  begin
-  MainWindow.SavePictureDialog.FileName:=ParamStr(1);
-  MainWindow.Surface.Picture.LoadFromFile(MainWindow.SavePictureDialog.FileName);
-  MainWindow.FileBar.SimpleText:=MainWindow.SavePictureDialog.FileName;
+  Self.SavePictureDialog.FileName:=ParamStr(1);
+  Self.Surface.Picture.LoadFromFile(Self.SavePictureDialog.FileName);
+  Self.FileBar.SimpleText:=Self.SavePictureDialog.FileName;
  end;
 
 end;
 
-procedure create_image();
+procedure TMainWindow.create_image();
 begin
- MainWindow.SizeField.Text:='5';
- MainWindow.Surface.Canvas.FillRect(MainWindow.Surface.Canvas.ClipRect);
- MainWindow.SavePictureDialog.FileName:='';
- MainWindow.FileBar.SimpleText:=MainWindow.SavePictureDialog.FileName;
+ Self.SizeField.Text:='5';
+ Self.Surface.Canvas.FillRect(Self.Surface.Canvas.ClipRect);
+ Self.SavePictureDialog.FileName:='';
+ Self.FileBar.SimpleText:=Self.SavePictureDialog.FileName;
 end;
 
-procedure set_canvas_size();
+procedure TMainWindow.set_canvas_size();
 begin
- MainWindow.Surface.Width:=StrToInt(MainWindow.WidthField.Text);
- MainWindow.Surface.Height:=StrToInt(MainWindow.HeightField.Text);
- MainWindow.Surface.Picture.Graphic.Width:=StrToInt(MainWindow.WidthField.Text);
- MainWindow.Surface.Picture.Graphic.Height:=StrToInt(MainWindow.HeightField.Text);
- MainWindow.Surface.Canvas.FillRect(MainWindow.Surface.ClientRect);
+ Self.Surface.Width:=StrToInt(Self.WidthField.Text);
+ Self.Surface.Height:=StrToInt(Self.HeightField.Text);
+ Self.Surface.Picture.Graphic.Width:=StrToInt(Self.WidthField.Text);
+ Self.Surface.Picture.Graphic.Height:=StrToInt(Self.HeightField.Text);
+ Self.Surface.Canvas.FillRect(Self.Surface.ClientRect);
 end;
 
-procedure save_to_clipboard();
+procedure TMainWindow.save_to_clipboard();
 begin
- MainWindow.Surface.Picture.SaveToClipboardFormat(CF_BITMAP);
+ Self.Surface.Picture.SaveToClipboardFormat(CF_BITMAP);
 end;
 
-procedure load_from_clipboard();
+procedure TMainWindow.load_from_clipboard();
 begin
- MainWindow.Surface.Picture.LoadFromClipboardFormat(CF_BITMAP);
+ Self.Surface.Picture.LoadFromClipboardFormat(CF_BITMAP);
 end;
 
-procedure save_to_file();
+procedure TMainWindow.save_to_file();
 begin
- if MainWindow.SavePictureDialog.FileName<>'' then
+ if Self.SavePictureDialog.FileName<>'' then
  begin
-  MainWindow.Surface.Picture.SaveToFile(MainWindow.SavePictureDialog.FileName);
+  Self.Surface.Picture.SaveToFile(Self.SavePictureDialog.FileName);
  end
  else
  begin
-  MainWindow.SavePictureDialog.Execute();
+  Self.SavePictureDialog.Execute();
  end;
 
-end;
-
-procedure show_help();
-var help:string;
-begin
- help:=ExtractFilePath(Application.ExeName)+'help.htm';
- OpenDocument(help);
 end;
 
 procedure TMainWindow.FormCreate(Sender: TObject);
 begin
- setup();
- create_image();
- check_command_line();
+ Self.setup();
+ Self.create_image();
+ Self.check_command_line();
 end;
 
 procedure TMainWindow.NewBtnClick(Sender: TObject);
 begin
- create_image();
+ Self.create_image();
 end;
 
 procedure TMainWindow.OpenBtnClick(Sender: TObject);
 begin
- MainWindow.OpenPictureDialog.Execute();
+ Self.OpenPictureDialog.Execute();
 end;
 
 procedure TMainWindow.SaveBtnClick(Sender: TObject);
 begin
- save_to_file();
+ Self.save_to_file();
 end;
 
 procedure TMainWindow.SizeBtnClick(Sender: TObject);
 begin
- set_canvas_size();
- resize_workspace();
+ Self.set_canvas_size();
+ Self.resize_workspace();
 end;
 
 procedure TMainWindow.CanvasBtnClick(Sender: TObject);
 begin
- if MainWindow.ColorDialog.Execute()=True then
+ if Self.ColorDialog.Execute()=True then
  begin
-  MainWindow.Surface.Canvas.Pen.Color:=MainWindow.ColorDialog.Color;
+  Self.Surface.Canvas.Pen.Color:=Self.ColorDialog.Color;
  end;
 
 end;
 
 procedure TMainWindow.PenBtnClick(Sender: TObject);
 begin
- if MainWindow.ColorDialog.Execute()=True then
+ if Self.ColorDialog.Execute()=True then
  begin
-  MainWindow.Surface.Canvas.Brush.Color:=MainWindow.ColorDialog.Color;
-  MainWindow.Surface.Canvas.FillRect(MainWindow.Surface.Canvas.ClipRect);
+  Self.Surface.Canvas.Brush.Color:=Self.ColorDialog.Color;
+  Self.Surface.Canvas.FillRect(Self.Surface.Canvas.ClipRect);
  end;
 
 end;
 
 procedure TMainWindow.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
- if MainWindow.SavePictureDialog.FileName<>'' then
+ if Self.SavePictureDialog.FileName<>'' then
  begin
-  MainWindow.Surface.Picture.SaveToFile(MainWindow.SavePictureDialog.FileName);
+  Self.Surface.Picture.SaveToFile(Self.SavePictureDialog.FileName);
  end
  else
  begin
   if MessageDlg(Application.Title,'An image is not saved. Do you want to save it now?',mtCustom,mbYesNo,0)=mrYes then
   begin
-   MainWindow.SavePictureDialog.Execute();
+   Self.SavePictureDialog.Execute();
   end;
 
 end;
@@ -311,7 +323,7 @@ end;
 
 procedure TMainWindow.FormResize(Sender: TObject);
 begin
- resize_workspace();
+ Self.resize_workspace();
 end;
 
 procedure TMainWindow.SurfaceMouseDown(Sender: TObject; Button: TMouseButton;
@@ -321,12 +333,12 @@ begin
  begin
   if ssShift in Shift then
   begin
-   MainWindow.Surface.Canvas.Pen.Color:=MainWindow.Surface.Canvas.Pixels[X,Y];
+   Self.Surface.Canvas.Pen.Color:=Self.Surface.Canvas.Pixels[X,Y];
   end
   else
   begin
-   MainWindow.Surface.Canvas.Brush.Color:=MainWindow.Surface.Canvas.Pen.Color;
-   MainWindow.Surface.Canvas.FloodFill(X,Y,MainWindow.Surface.Canvas.Pixels[X,Y],fsSurface);
+   Self.Surface.Canvas.Brush.Color:=Self.Surface.Canvas.Pen.Color;
+   Self.Surface.Canvas.FloodFill(X,Y,Self.Surface.Canvas.Pixels[X,Y],fsSurface);
   end;
 
  end;
@@ -336,7 +348,7 @@ end;
 procedure TMainWindow.SurfaceMouseEnter(Sender: TObject);
 begin
  Screen.Cursor:=crCross;
- MainWindow.Surface.Canvas.Pen.Width:=StrToInt(MainWindow.SizeField.Text);
+ Self.Surface.Canvas.Pen.Width:=StrToInt(Self.SizeField.Text);
 end;
 
 procedure TMainWindow.SurfaceMouseLeave(Sender: TObject);
@@ -349,16 +361,16 @@ procedure TMainWindow.SurfaceMouseMove(Sender: TObject; Shift: TShiftState; X,
 begin
  if ssLeft in Shift then
  begin
-  MainWindow.Surface.Canvas.MoveTo(X,Y);
-  MainWindow.Surface.Canvas.LineTo(X,Y);
+  Self.Surface.Canvas.MoveTo(X,Y);
+  Self.Surface.Canvas.LineTo(X,Y);
  end;
 
 end;
 
 procedure TMainWindow.SurfaceResize(Sender: TObject);
 begin
- MainWindow.WidthField.Text:=IntToStr(MainWindow.Surface.Width);
- MainWindow.HeightField.Text:=IntToStr(MainWindow.Surface.Height);
+ Self.WidthField.Text:=IntToStr(Self.Surface.Width);
+ Self.HeightField.Text:=IntToStr(Self.Surface.Height);
 end;
 
 procedure TMainWindow.AboutMenuItemClick(Sender: TObject);
@@ -368,45 +380,45 @@ end;
 
 procedure TMainWindow.ShowHelpMenuItemClick(Sender: TObject);
 begin
- show_help();
+ OpenDocument(ExtractFilePath(Application.ExeName)+'help.htm');
 end;
 
 procedure TMainWindow.NewMenuItemClick(Sender: TObject);
 begin
- create_image();
+ Self.create_image();
 end;
 
 procedure TMainWindow.OpenMenuItemClick(Sender: TObject);
 begin
- MainWindow.OpenPictureDialog.Execute();
+ Self.OpenPictureDialog.Execute();
 end;
 
 procedure TMainWindow.SaveMenuItemClick(Sender: TObject);
 begin
- save_to_file();
+ Self.save_to_file();
 end;
 
 procedure TMainWindow.SaveAsMenuItemClick(Sender: TObject);
 begin
- MainWindow.SavePictureDialog.Execute();
+ Self.SavePictureDialog.Execute();
 end;
 
 procedure TMainWindow.CopyMenuItemClick(Sender: TObject);
 begin
- save_to_clipboard();
+ Self.save_to_clipboard();
 end;
 
 procedure TMainWindow.PasteMenuItemClick(Sender: TObject);
 begin
- load_from_clipboard();
+ Self.load_from_clipboard();
 end;
 
 procedure TMainWindow.OpenPictureDialogCanClose(Sender: TObject;
   var CanClose: boolean);
 begin
- MainWindow.SavePictureDialog.FileName:=MainWindow.OpenPictureDialog.FileName;
- MainWindow.Surface.Picture.LoadFromFile(MainWindow.SavePictureDialog.FileName);
- MainWindow.FileBar.SimpleText:=MainWindow.SavePictureDialog.FileName;
+ Self.SavePictureDialog.FileName:=Self.OpenPictureDialog.FileName;
+ Self.Surface.Picture.LoadFromFile(Self.SavePictureDialog.FileName);
+ Self.FileBar.SimpleText:=Self.SavePictureDialog.FileName;
 end;
 
 procedure TMainWindow.SavePictureDialogCanClose(Sender: TObject;
@@ -414,9 +426,9 @@ procedure TMainWindow.SavePictureDialogCanClose(Sender: TObject;
 begin
  if SavePictureDialog.FileName<>'' then
  begin
-  MainWindow.SavePictureDialog.FileName:=ExtractFileNameWithoutExt(MainWindow.SavePictureDialog.FileName)+'.'+MainWindow.SavePictureDialog.GetFilterExt();
-  MainWindow.Surface.Picture.SaveToFile(MainWindow.SavePictureDialog.FileName);
-  MainWindow.FileBar.SimpleText:=MainWindow.SavePictureDialog.FileName;
+  Self.SavePictureDialog.FileName:=ExtractFileNameWithoutExt(Self.SavePictureDialog.FileName)+'.'+Self.SavePictureDialog.GetFilterExt();
+  Self.Surface.Picture.SaveToFile(Self.SavePictureDialog.FileName);
+  Self.FileBar.SimpleText:=Self.SavePictureDialog.FileName;
  end;
 
 end;
