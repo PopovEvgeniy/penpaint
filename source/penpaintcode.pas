@@ -19,12 +19,13 @@ type
   { TMainWindow }
 
   TMainWindow = class(TForm)
-    NewBtn: TBitBtn;
-    OpenBtn: TBitBtn;
-    SaveBtn: TBitBtn;
-    SizeBtn: TBitBtn;
     CanvasBtn: TBitBtn;
     PenBtn: TBitBtn;
+    NewBtn: TBitBtn;
+    OpenBtn: TBitBtn;
+    EmptyMenu: TPopupMenu;
+    SaveBtn: TBitBtn;
+    SizeBtn: TBitBtn;
     ColorDialog: TColorDialog;
     Surface: TImage;
     WidthField: TLabeledEdit;
@@ -106,13 +107,16 @@ end;
 procedure TMainWindow.window_setup();
 begin
  Application.Title:='PenPaint';
- Self.Caption:='PenPaint 1.6.1';
+ Self.Caption:='PenPaint 1.6.6';
  Self.Font.Name:=Screen.MenuFont.Name;
  Self.Font.Size:=14;
 end;
 
 procedure TMainWindow.interface_setup();
 begin
+ Self.WidthField.PopupMenu:=EmptyMenu;
+ Self.HeightField.PopupMenu:=EmptyMenu;
+ Self.SizeField.PopupMenu:=EmptyMenu;
  Self.ScrollBox.AutoScroll:=True;
  Self.WidthField.NumbersOnly:=True;
  Self.HeightField.NumbersOnly:=True;
@@ -142,8 +146,8 @@ begin
  Self.OpenBtn.Glyph.LoadFromFile(get_icon('open'));
  Self.SaveBtn.Glyph.LoadFromFile(get_icon('save'));
  Self.SizeBtn.Glyph.LoadFromFile(get_icon('size'));
- Self.CanvasBtn.Glyph.LoadFromFile(get_icon('canvas'));
  Self.PenBtn.Glyph.LoadFromFile(get_icon('pen'));
+ Self.CanvasBtn.Glyph.LoadFromFile(get_icon('canvas'));
 end;
 
 procedure TMainWindow.load_contex_help();
@@ -152,8 +156,8 @@ begin
  Self.OpenBtn.Hint:='Load an image from the file';
  Self.SaveBtn.Hint:='Save an image to the file';
  Self.SizeBtn.Hint:='Clear the current image and resize the canvas';
- Self.CanvasBtn.Hint:='Set the pen color';
- Self.PenBtn.Hint:='Set the background color';
+ Self.CanvasBtn.Hint:='Set the canvas color';
+ Self.PenBtn.Hint:='Set the pen color';
 end;
 
 procedure TMainWindow.shortcut_setup();
@@ -162,8 +166,8 @@ begin
  Self.MainMenu.Items[0].Items[1].ShortCut:=TextToShortCut('Ctrl+O');
  Self.MainMenu.Items[0].Items[2].ShortCut:=TextToShortCut('Ctrl+S');
  Self.MainMenu.Items[0].Items[3].ShortCut:=TextToShortCut('Ctrl+Alt+S');
- Self.MainMenu.Items[1].Items[0].ShortCut:=TextToShortCut('Ctrl+C');
- Self.MainMenu.Items[1].Items[1].ShortCut:=TextToShortCut('Ctrl+V');
+ Self.MainMenu.Items[1].Items[0].ShortCut:=TextToShortCut('Shift+C');
+ Self.MainMenu.Items[1].Items[1].ShortCut:=TextToShortCut('Shift+V');
  Self.MainMenu.Items[2].Items[1].ShortCut:=TextToShortCut('F1');
 end;
 
@@ -227,11 +231,13 @@ end;
 
 procedure TMainWindow.set_canvas_size();
 begin
- Self.Surface.Width:=StrToInt(Self.WidthField.Text);
- Self.Surface.Height:=StrToInt(Self.HeightField.Text);
- Self.Surface.Picture.Graphic.Width:=StrToInt(Self.WidthField.Text);
- Self.Surface.Picture.Graphic.Height:=StrToInt(Self.HeightField.Text);
+ if StrToIntDef(Self.WidthField.Text,0)>0 then Self.Surface.Picture.Graphic.Width:=StrToInt(Self.WidthField.Text);
+ if StrToIntDef(Self.HeightField.Text,0)>0 then Self.Surface.Picture.Graphic.Height:=StrToInt(Self.HeightField.Text);
+ Self.Surface.Width:=Self.Surface.Picture.Graphic.Width;
+ Self.Surface.Height:=Self.Surface.Picture.Graphic.Height;
  Self.Surface.Canvas.FillRect(Self.Surface.ClientRect);
+ Self.WidthField.Text:=IntToStr(Self.Surface.Width);
+ Self.HeightField.Text:=IntToStr(Self.Surface.Height);
 end;
 
 procedure TMainWindow.save_to_clipboard();
@@ -289,7 +295,8 @@ procedure TMainWindow.CanvasBtnClick(Sender: TObject);
 begin
  if Self.ColorDialog.Execute()=True then
  begin
-  Self.Surface.Canvas.Pen.Color:=Self.ColorDialog.Color;
+  Self.Surface.Canvas.Brush.Color:=Self.ColorDialog.Color;
+  Self.Surface.Canvas.FillRect(Self.Surface.Canvas.ClipRect);
  end;
 
 end;
@@ -298,8 +305,7 @@ procedure TMainWindow.PenBtnClick(Sender: TObject);
 begin
  if Self.ColorDialog.Execute()=True then
  begin
-  Self.Surface.Canvas.Brush.Color:=Self.ColorDialog.Color;
-  Self.Surface.Canvas.FillRect(Self.Surface.Canvas.ClipRect);
+  Self.Surface.Canvas.Pen.Color:=Self.ColorDialog.Color;
  end;
 
 end;
@@ -348,7 +354,8 @@ end;
 procedure TMainWindow.SurfaceMouseEnter(Sender: TObject);
 begin
  Screen.Cursor:=crCross;
- Self.Surface.Canvas.Pen.Width:=StrToInt(Self.SizeField.Text);
+ if StrToIntDef(Self.SizeField.Text,0)>0 then Self.Surface.Canvas.Pen.Width:=StrToInt(Self.SizeField.Text);
+ Self.SizeField.Text:=IntToStr(Self.Surface.Canvas.Pen.Width);
 end;
 
 procedure TMainWindow.SurfaceMouseLeave(Sender: TObject);
