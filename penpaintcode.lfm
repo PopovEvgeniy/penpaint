@@ -42,7 +42,7 @@ object MainWindow: TMainWindow
     Left = 184
     Height = 23
     Top = 16
-    Width = 56
+    Width = 72
     EditLabel.Height = 23
     EditLabel.Width = 32
     EditLabel.Caption = 'Width'
@@ -53,10 +53,10 @@ object MainWindow: TMainWindow
     OnExit = WidthFieldExit
   end
   object HeightField: TLabeledEdit
-    Left = 304
+    Left = 320
     Height = 23
     Top = 16
-    Width = 56
+    Width = 72
     EditLabel.Height = 23
     EditLabel.Width = 36
     EditLabel.Caption = 'Height'
@@ -67,7 +67,7 @@ object MainWindow: TMainWindow
     OnExit = HeightFieldExit
   end
   object SizeBtn: TBitBtn
-    Left = 368
+    Left = 400
     Height = 32
     Top = 13
     Width = 32
@@ -76,10 +76,10 @@ object MainWindow: TMainWindow
     OnClick = SizeBtnClick
   end
   object SizeField: TLabeledEdit
-    Left = 440
+    Left = 480
     Height = 23
     Top = 16
-    Width = 56
+    Width = 40
     EditLabel.Height = 23
     EditLabel.Width = 20
     EditLabel.Caption = 'Size'
@@ -120,18 +120,18 @@ object MainWindow: TMainWindow
     Panels = <>
   end
   object PenBtn: TBitBtn
-    Left = 504
+    Left = 528
     Height = 32
-    Top = 16
+    Top = 13
     Width = 32
     Caption = 'PenBtn'
     TabOrder = 9
     OnClick = PenBtnClick
   end
   object CanvasBtn: TBitBtn
-    Left = 544
+    Left = 568
     Height = 32
-    Top = 16
+    Top = 13
     Width = 32
     Caption = 'CanvasBtn'
     TabOrder = 10

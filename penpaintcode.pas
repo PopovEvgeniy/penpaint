@@ -7,6 +7,7 @@ unit penpaintcode;
 
 {$mode objfpc}
 {$H+}
+{$R icons.res}
 
 interface
 
@@ -79,6 +80,7 @@ type
   private
     procedure window_setup();
     procedure interface_setup();
+    procedure load_icons();
     procedure load_contex_help();
     procedure shortcut_setup();
     procedure dialog_setup();
@@ -103,15 +105,25 @@ implementation
 
 { TMainWindow }
 
-function get_icon(const icon:string): string;
+procedure show_help();
+var help:string;
 begin
- Result:=ExtractFilePath(Application.ExeName)+'icons'+DirectorySeparator+icon+'.bmp';
+ help:=ExtractFilePath(Application.ExeName)+'help.htm';
+ if FileExists(help) then
+ begin
+  OpenDocument(help);
+ end
+ else
+ begin
+  ShowMessage('Cannot find the help file');
+ end;
+
 end;
 
 procedure TMainWindow.window_setup();
 begin
  Application.Title:='PenPaint';
- Self.Caption:='PenPaint 1.7.2';
+ Self.Caption:='PenPaint 1.7.6';
  Self.Font.Name:=Screen.MenuFont.Name;
  Self.Font.Size:=14;
 end;
@@ -125,6 +137,9 @@ begin
  Self.WidthField.NumbersOnly:=True;
  Self.HeightField.NumbersOnly:=True;
  Self.SizeField.NumbersOnly:=True;
+ Self.WidthField.MaxLength:=5;
+ Self.HeightField.MaxLength:=5;
+ Self.SizeField.MaxLength:=2;
  Self.WidthField.Text:='';
  Self.HeightField.Text:='';
  Self.SizeField.Text:='';
@@ -140,18 +155,22 @@ begin
  Self.SizeBtn.Caption:='';
  Self.CanvasBtn.Caption:='';
  Self.PenBtn.Caption:='';
+end;
+
+procedure TMainWindow.load_icons();
+begin
  Self.NewBtn.NumGlyphs:=1;
  Self.OpenBtn.NumGlyphs:=1;
  Self.SaveBtn.NumGlyphs:=1;
  Self.SizeBtn.NumGlyphs:=1;
  Self.CanvasBtn.NumGlyphs:=1;
  Self.PenBtn.NumGlyphs:=1;
- Self.NewBtn.Glyph.LoadFromFile(get_icon('new'));
- Self.OpenBtn.Glyph.LoadFromFile(get_icon('open'));
- Self.SaveBtn.Glyph.LoadFromFile(get_icon('save'));
- Self.SizeBtn.Glyph.LoadFromFile(get_icon('size'));
- Self.PenBtn.Glyph.LoadFromFile(get_icon('pen'));
- Self.CanvasBtn.Glyph.LoadFromFile(get_icon('canvas'));
+ Self.NewBtn.Glyph.LoadFromResourceName(HINSTANCE,'NEW');
+ Self.OpenBtn.Glyph.LoadFromResourceName(HINSTANCE,'OPEN');
+ Self.SaveBtn.Glyph.LoadFromResourceName(HINSTANCE,'SAVE');
+ Self.SizeBtn.Glyph.LoadFromResourceName(HINSTANCE,'SIZE');
+ Self.PenBtn.Glyph.LoadFromResourceName(HINSTANCE,'PEN');
+ Self.CanvasBtn.Glyph.LoadFromResourceName(HINSTANCE,'CANVAS');
 end;
 
 procedure TMainWindow.load_contex_help();
@@ -199,14 +218,15 @@ end;
 
 procedure TMainWindow.resize_workspace();
 begin
- Self.ScrollBox.Width:=Self.ClientWidth-10;
- Self.ScrollBox.Height:=Self.ClientHeight-Self.OpenBtn.Top-10;
+ Self.ScrollBox.Width:=Self.ClientWidth-20;
+ Self.ScrollBox.Height:=Self.ClientHeight-Self.OpenBtn.Top-60;
 end;
 
 procedure TMainWindow.setup();
 begin
  Self.window_setup();
  Self.interface_setup();
+ Self.load_icons();
  Self.load_contex_help();
  Self.shortcut_setup();
  Self.dialog_setup();
@@ -396,7 +416,7 @@ end;
 
 procedure TMainWindow.ShowHelpMenuItemClick(Sender: TObject);
 begin
- OpenDocument(ExtractFilePath(Application.ExeName)+'help.htm');
+ show_help();
 end;
 
 procedure TMainWindow.NewMenuItemClick(Sender: TObject);
