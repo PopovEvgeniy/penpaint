@@ -47,21 +47,22 @@ type
     SavePictureDialog: TSavePictureDialog;
     ScrollBox: TScrollBox;
     FileBar: TStatusBar;
+    procedure FormCreate(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure NewBtnClick(Sender: TObject);
     procedure OpenBtnClick(Sender: TObject);
     procedure SaveBtnClick(Sender: TObject);
     procedure SizeBtnClick(Sender: TObject);
     procedure CanvasBtnClick(Sender: TObject);
     procedure PenBtnClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
-    procedure FormCreate(Sender: TObject);
-    procedure FormResize(Sender: TObject);
     procedure SurfaceMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure SurfaceMouseEnter(Sender: TObject);
     procedure SurfaceMouseLeave(Sender: TObject);
     procedure SurfaceMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure SurfaceResize(Sender: TObject);
+    procedure ScrollBoxMouseEnter(Sender: TObject);
     procedure AboutMenuItemClick(Sender: TObject);
     procedure ShowHelpMenuItemClick(Sender: TObject);
     procedure NewMenuItemClick(Sender: TObject);
@@ -72,6 +73,9 @@ type
     procedure PasteMenuItemClick(Sender: TObject);
     procedure OpenPictureDialogCanClose(Sender: TObject; var CanClose: boolean);
     procedure SavePictureDialogCanClose(Sender: TObject; var CanClose: boolean);
+    procedure WidthFieldExit(Sender: TObject);
+    procedure HeightFieldExit(Sender: TObject);
+    procedure SizeFieldExit(Sender: TObject);
   private
     procedure window_setup();
     procedure interface_setup();
@@ -107,7 +111,7 @@ end;
 procedure TMainWindow.window_setup();
 begin
  Application.Title:='PenPaint';
- Self.Caption:='PenPaint 1.6.6';
+ Self.Caption:='PenPaint 1.7.2';
  Self.Font.Name:=Screen.MenuFont.Name;
  Self.Font.Size:=14;
 end;
@@ -196,7 +200,7 @@ end;
 procedure TMainWindow.resize_workspace();
 begin
  Self.ScrollBox.Width:=Self.ClientWidth-10;
- Self.ScrollBox.Height:=Self.ClientHeight-Self.OpenBtn.Top-80;
+ Self.ScrollBox.Height:=Self.ClientHeight-Self.OpenBtn.Top-10;
 end;
 
 procedure TMainWindow.setup();
@@ -231,8 +235,8 @@ end;
 
 procedure TMainWindow.set_canvas_size();
 begin
- if StrToIntDef(Self.WidthField.Text,0)>0 then Self.Surface.Picture.Graphic.Width:=StrToInt(Self.WidthField.Text);
- if StrToIntDef(Self.HeightField.Text,0)>0 then Self.Surface.Picture.Graphic.Height:=StrToInt(Self.HeightField.Text);
+ Self.Surface.Picture.Graphic.Width:=StrToInt(Self.WidthField.Text);
+ Self.Surface.Picture.Graphic.Height:=StrToInt(Self.HeightField.Text);
  Self.Surface.Width:=Self.Surface.Picture.Graphic.Width;
  Self.Surface.Height:=Self.Surface.Picture.Graphic.Height;
  Self.Surface.Canvas.FillRect(Self.Surface.ClientRect);
@@ -268,6 +272,28 @@ begin
  Self.setup();
  Self.create_image();
  Self.check_command_line();
+end;
+
+procedure TMainWindow.FormResize(Sender: TObject);
+begin
+ Self.resize_workspace();
+end;
+
+procedure TMainWindow.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+ if Self.SavePictureDialog.FileName<>'' then
+ begin
+  Self.Surface.Picture.SaveToFile(Self.SavePictureDialog.FileName);
+ end
+ else
+ begin
+  if MessageDlg(Application.Title,'An image is not saved. Do you want to save it now?',mtCustom,mbYesNo,0)=mrYes then
+  begin
+   Self.SavePictureDialog.Execute();
+  end;
+
+end;
+
 end;
 
 procedure TMainWindow.NewBtnClick(Sender: TObject);
@@ -310,28 +336,6 @@ begin
 
 end;
 
-procedure TMainWindow.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
- if Self.SavePictureDialog.FileName<>'' then
- begin
-  Self.Surface.Picture.SaveToFile(Self.SavePictureDialog.FileName);
- end
- else
- begin
-  if MessageDlg(Application.Title,'An image is not saved. Do you want to save it now?',mtCustom,mbYesNo,0)=mrYes then
-  begin
-   Self.SavePictureDialog.Execute();
-  end;
-
-end;
-
-end;
-
-procedure TMainWindow.FormResize(Sender: TObject);
-begin
- Self.resize_workspace();
-end;
-
 procedure TMainWindow.SurfaceMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
@@ -353,9 +357,9 @@ end;
 
 procedure TMainWindow.SurfaceMouseEnter(Sender: TObject);
 begin
+ Self.ScrollBox.SetFocus();
  Screen.Cursor:=crCross;
- if StrToIntDef(Self.SizeField.Text,0)>0 then Self.Surface.Canvas.Pen.Width:=StrToInt(Self.SizeField.Text);
- Self.SizeField.Text:=IntToStr(Self.Surface.Canvas.Pen.Width);
+ Self.Surface.Canvas.Pen.Width:=StrToInt(Self.SizeField.Text);
 end;
 
 procedure TMainWindow.SurfaceMouseLeave(Sender: TObject);
@@ -378,6 +382,11 @@ procedure TMainWindow.SurfaceResize(Sender: TObject);
 begin
  Self.WidthField.Text:=IntToStr(Self.Surface.Width);
  Self.HeightField.Text:=IntToStr(Self.Surface.Height);
+end;
+
+procedure TMainWindow.ScrollBoxMouseEnter(Sender: TObject);
+begin
+ Self.ScrollBox.SetFocus();
 end;
 
 procedure TMainWindow.AboutMenuItemClick(Sender: TObject);
@@ -438,6 +447,21 @@ begin
   Self.FileBar.SimpleText:=Self.SavePictureDialog.FileName;
  end;
 
+end;
+
+procedure TMainWindow.WidthFieldExit(Sender: TObject);
+begin
+ if StrToIntDef(Self.WidthField.Text,0)<=0 then Self.WidthField.Text:=IntToStr(Self.Surface.Width);
+end;
+
+procedure TMainWindow.HeightFieldExit(Sender: TObject);
+begin
+ if StrToIntDef(Self.HeightField.Text,0)<=0 then Self.HeightField.Text:=IntToStr(Self.Surface.Height);
+end;
+
+procedure TMainWindow.SizeFieldExit(Sender: TObject);
+begin
+ if StrToIntDef(Self.SizeField.Text,0)<=0 then Self.SizeField.Text:=IntToStr(Self.Surface.Canvas.Pen.Width);
 end;
 
 end.

@@ -50,6 +50,7 @@ object MainWindow: TMainWindow
     LabelPosition = lpLeft
     TabOrder = 3
     Text = 'WidthField'
+    OnExit = WidthFieldExit
   end
   object HeightField: TLabeledEdit
     Left = 304
@@ -63,6 +64,7 @@ object MainWindow: TMainWindow
     LabelPosition = lpLeft
     TabOrder = 4
     Text = 'HeightField'
+    OnExit = HeightFieldExit
   end
   object SizeBtn: TBitBtn
     Left = 368
@@ -85,6 +87,7 @@ object MainWindow: TMainWindow
     LabelPosition = lpLeft
     TabOrder = 6
     Text = 'SizeField'
+    OnExit = SizeFieldExit
   end
   object ScrollBox: TScrollBox
     Left = 9
@@ -96,6 +99,7 @@ object MainWindow: TMainWindow
     ClientHeight = 468
     ClientWidth = 547
     TabOrder = 7
+    OnMouseEnter = ScrollBoxMouseEnter
     object Surface: TImage
       Left = 5
       Height = 440
