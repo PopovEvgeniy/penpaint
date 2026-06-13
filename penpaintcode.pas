@@ -63,7 +63,6 @@ type
     procedure SurfaceMouseLeave(Sender: TObject);
     procedure SurfaceMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure SurfaceResize(Sender: TObject);
-    procedure ScrollBoxMouseEnter(Sender: TObject);
     procedure AboutMenuItemClick(Sender: TObject);
     procedure ShowHelpMenuItemClick(Sender: TObject);
     procedure NewMenuItemClick(Sender: TObject);
@@ -123,7 +122,7 @@ end;
 procedure TMainWindow.window_setup();
 begin
  Application.Title:='PenPaint';
- Self.Caption:='PenPaint 1.7.6';
+ Self.Caption:='PenPaint 1.8.3';
  Self.Font.Name:=Screen.MenuFont.Name;
  Self.Font.Size:=14;
 end;
@@ -137,6 +136,8 @@ begin
  Self.WidthField.NumbersOnly:=True;
  Self.HeightField.NumbersOnly:=True;
  Self.SizeField.NumbersOnly:=True;
+ Self.ScrollBox.AutoScroll:=True;
+ Self.ScrollBox.AutoSize:=False;
  Self.WidthField.MaxLength:=5;
  Self.HeightField.MaxLength:=5;
  Self.SizeField.MaxLength:=2;
@@ -214,6 +215,7 @@ begin
  Self.Surface.Canvas.Pen.Style:=psSolid;
  Self.Surface.Canvas.Brush.Color:=clWhite;
  Self.Surface.Canvas.Pen.Color:=clBlack;
+ Self.Surface.Canvas.Pen.Width:=5;
 end;
 
 procedure TMainWindow.resize_workspace();
@@ -247,7 +249,7 @@ end;
 
 procedure TMainWindow.create_image();
 begin
- Self.SizeField.Text:='5';
+ Self.SizeField.Text:=IntToStr(Self.Surface.Canvas.Pen.Width);
  Self.Surface.Canvas.FillRect(Self.Surface.Canvas.ClipRect);
  Self.SavePictureDialog.FileName:='';
  Self.FileBar.SimpleText:=Self.SavePictureDialog.FileName;
@@ -257,11 +259,7 @@ procedure TMainWindow.set_canvas_size();
 begin
  Self.Surface.Picture.Graphic.Width:=StrToInt(Self.WidthField.Text);
  Self.Surface.Picture.Graphic.Height:=StrToInt(Self.HeightField.Text);
- Self.Surface.Width:=Self.Surface.Picture.Graphic.Width;
- Self.Surface.Height:=Self.Surface.Picture.Graphic.Height;
  Self.Surface.Canvas.FillRect(Self.Surface.ClientRect);
- Self.WidthField.Text:=IntToStr(Self.Surface.Width);
- Self.HeightField.Text:=IntToStr(Self.Surface.Height);
 end;
 
 procedure TMainWindow.save_to_clipboard();
@@ -377,9 +375,11 @@ end;
 
 procedure TMainWindow.SurfaceMouseEnter(Sender: TObject);
 begin
- Self.ScrollBox.SetFocus();
  Screen.Cursor:=crCross;
- Self.Surface.Canvas.Pen.Width:=StrToInt(Self.SizeField.Text);
+ Self.ScrollBox.SetFocus();
+ if StrToIntDef(Self.WidthField.Text,0)<>Self.Surface.Width then Self.WidthField.Text:=IntToStr(Self.Surface.Width);
+ if StrToIntDef(Self.HeightField.Text,0)<>Self.Surface.Height then Self.HeightField.Text:=IntToStr(Self.Surface.Height);
+ if StrToIntDef(Self.SizeField.Text,0)>0 then Self.Surface.Canvas.Pen.Width:=StrToInt(Self.SizeField.Text);
 end;
 
 procedure TMainWindow.SurfaceMouseLeave(Sender: TObject);
@@ -402,11 +402,6 @@ procedure TMainWindow.SurfaceResize(Sender: TObject);
 begin
  Self.WidthField.Text:=IntToStr(Self.Surface.Width);
  Self.HeightField.Text:=IntToStr(Self.Surface.Height);
-end;
-
-procedure TMainWindow.ScrollBoxMouseEnter(Sender: TObject);
-begin
- Self.ScrollBox.SetFocus();
 end;
 
 procedure TMainWindow.AboutMenuItemClick(Sender: TObject);
