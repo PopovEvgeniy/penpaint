@@ -122,7 +122,7 @@ end;
 procedure TMainWindow.window_setup();
 begin
  Application.Title:='PenPaint';
- Self.Caption:='PenPaint 1.8.3';
+ Self.Caption:='PenPaint 1.8.4';
  Self.Font.Name:=Screen.MenuFont.Name;
  Self.Font.Size:=14;
 end;
@@ -132,7 +132,6 @@ begin
  Self.WidthField.PopupMenu:=EmptyMenu;
  Self.HeightField.PopupMenu:=EmptyMenu;
  Self.SizeField.PopupMenu:=EmptyMenu;
- Self.ScrollBox.AutoScroll:=True;
  Self.WidthField.NumbersOnly:=True;
  Self.HeightField.NumbersOnly:=True;
  Self.SizeField.NumbersOnly:=True;
@@ -198,7 +197,7 @@ end;
 procedure TMainWindow.dialog_setup();
 begin
  Self.OpenPictureDialog.InitialDir:='';
- Self.SavePictureDialog.InitialDir:=Self.OpenPictureDialog.InitialDir;
+ Self.SavePictureDialog.InitialDir:='';
  Self.OpenPictureDialog.Filter:='All supported formats|*.bmp;*.jpg;*.png;*.xpm';
  Self.OpenPictureDialog.FileName:='*.bmp;*.jpg;*.png;*.xpm';
  Self.SavePictureDialog.Filter:='Bitmaps|*.bmp|Pixmap|*.xpm|Portable Network Graphic|*.png|Joint Picture Expert Group|*.jpg';
