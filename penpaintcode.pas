@@ -122,7 +122,7 @@ end;
 procedure TMainWindow.window_setup();
 begin
  Application.Title:='PenPaint';
- Self.Caption:='PenPaint 1.8.4';
+ Self.Caption:='PenPaint 1.8.5';
  Self.Font.Name:=Screen.MenuFont.Name;
  Self.Font.Size:=14;
 end;
@@ -256,9 +256,10 @@ end;
 
 procedure TMainWindow.set_canvas_size();
 begin
- Self.Surface.Picture.Graphic.Width:=StrToInt(Self.WidthField.Text);
- Self.Surface.Picture.Graphic.Height:=StrToInt(Self.HeightField.Text);
- Self.Surface.Canvas.FillRect(Self.Surface.ClientRect);
+ Self.Surface.Picture.Bitmap.Width:=StrToInt(Self.WidthField.Text);
+ Self.Surface.Picture.Bitmap.Height:=StrToInt(Self.HeightField.Text);
+ Self.Surface.Picture.Bitmap.Canvas.Brush.Color:=Self.Surface.Canvas.Brush.Color;
+ Self.Surface.Picture.Bitmap.Canvas.FillRect(Self.Surface.Picture.Bitmap.Canvas.ClipRect);
 end;
 
 procedure TMainWindow.save_to_clipboard();
