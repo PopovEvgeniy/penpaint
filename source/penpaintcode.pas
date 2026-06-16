@@ -122,7 +122,7 @@ end;
 procedure TMainWindow.window_setup();
 begin
  Application.Title:='PenPaint';
- Self.Caption:='PenPaint 1.8.5';
+ Self.Caption:='PenPaint 1.8.7';
  Self.Font.Name:=Screen.MenuFont.Name;
  Self.Font.Size:=14;
 end;
@@ -231,7 +231,6 @@ begin
  Self.load_contex_help();
  Self.shortcut_setup();
  Self.dialog_setup();
- Self.canvas_setup();
  Self.resize_workspace();
 end;
 
@@ -248,14 +247,21 @@ end;
 
 procedure TMainWindow.create_image();
 begin
+ Self.Surface.Picture.Clear();
+ Self.canvas_setup();
  Self.SizeField.Text:=IntToStr(Self.Surface.Canvas.Pen.Width);
- Self.Surface.Canvas.FillRect(Self.Surface.Canvas.ClipRect);
+ Self.Surface.Picture.Bitmap.Width:=Self.ScrollBox.ClientWidth;
+ Self.Surface.Picture.Bitmap.Height:=Self.ScrollBox.ClientHeight;
+ Self.Surface.Picture.Bitmap.Canvas.Brush.Color:=Self.Surface.Canvas.Brush.Color;
+ Self.Surface.Picture.Bitmap.Canvas.FillRect(Self.Surface.Picture.Bitmap.Canvas.ClipRect);
  Self.SavePictureDialog.FileName:='';
  Self.FileBar.SimpleText:=Self.SavePictureDialog.FileName;
 end;
 
 procedure TMainWindow.set_canvas_size();
 begin
+ Self.Surface.Picture.Clear();
+ Self.canvas_setup();
  Self.Surface.Picture.Bitmap.Width:=StrToInt(Self.WidthField.Text);
  Self.Surface.Picture.Bitmap.Height:=StrToInt(Self.HeightField.Text);
  Self.Surface.Picture.Bitmap.Canvas.Brush.Color:=Self.Surface.Canvas.Brush.Color;
@@ -377,8 +383,8 @@ procedure TMainWindow.SurfaceMouseEnter(Sender: TObject);
 begin
  Screen.Cursor:=crCross;
  Self.ScrollBox.SetFocus();
- if StrToIntDef(Self.WidthField.Text,0)<>Self.Surface.Width then Self.WidthField.Text:=IntToStr(Self.Surface.Width);
- if StrToIntDef(Self.HeightField.Text,0)<>Self.Surface.Height then Self.HeightField.Text:=IntToStr(Self.Surface.Height);
+ if StrToIntDef(Self.WidthField.Text,0)<>Self.Surface.Picture.Width then Self.WidthField.Text:=IntToStr(Self.Surface.Picture.Width);
+ if StrToIntDef(Self.HeightField.Text,0)<>Self.Surface.Picture.Height then Self.HeightField.Text:=IntToStr(Self.Surface.Picture.Height);
  if StrToIntDef(Self.SizeField.Text,0)>0 then Self.Surface.Canvas.Pen.Width:=StrToInt(Self.SizeField.Text);
 end;
 
@@ -466,12 +472,12 @@ end;
 
 procedure TMainWindow.WidthFieldExit(Sender: TObject);
 begin
- if StrToIntDef(Self.WidthField.Text,0)<=0 then Self.WidthField.Text:=IntToStr(Self.Surface.Width);
+ if StrToIntDef(Self.WidthField.Text,0)<=0 then Self.WidthField.Text:=IntToStr(Self.Surface.Picture.Width);
 end;
 
 procedure TMainWindow.HeightFieldExit(Sender: TObject);
 begin
- if StrToIntDef(Self.HeightField.Text,0)<=0 then Self.HeightField.Text:=IntToStr(Self.Surface.Height);
+ if StrToIntDef(Self.HeightField.Text,0)<=0 then Self.HeightField.Text:=IntToStr(Self.Surface.Picture.Height);
 end;
 
 procedure TMainWindow.SizeFieldExit(Sender: TObject);
